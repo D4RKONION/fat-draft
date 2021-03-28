@@ -3,10 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import WebSocketProvider from './js/socket';
+import store from './js/store';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <WebSocketProvider>     
+        <App />
+      </WebSocketProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

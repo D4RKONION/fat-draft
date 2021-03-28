@@ -17,10 +17,16 @@ const io = socketIo(server, {
   },
 });
 
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 
 io.on("connection", (socket) => {
   console.log("New client connected");
-  socket.userName = socket.handshake.headers.username;
+  socket.userName = `${socket.handshake.headers.username}#${getRandomInt(1000, 10000)}`;
   socket.roomCode = socket.handshake.headers.roomcode ? socket.handshake.headers.roomcode : crypto.randomBytes(3).toString('hex').toUpperCase();
 
   
@@ -34,14 +40,18 @@ io.on("connection", (socket) => {
   }
 
   console.log(users);
-
+  console.log(socket.roomCode)
+  const requstedRoomCode = io.of("/").adapter.rooms.get(socket.roomCode)
+  if (requstedRoomCode && requstedRoomCode.size > 1) {
+    // there's too many people in the room!
+    console.log("There's too many people in the room!")
+    socket.roomCode = "";
+    socket.emit("event://room-full", "soz");
+  } else {
+    socket.join(socket.roomCode);
+    socket.emit("event://room-joined", {userName: socket.userName, roomCode: socket.roomCode});
+  }
   
-  socket.emit("room joined", socket.roomCode);
-  socket.join(socket.roomCode);
-  
-  socket.on("add user", userName => {
-    socket.emit("add user success", "hi");
-  })
   
   socket.on("disconnect", () => {
     console.log("Client disconnected");
