@@ -38,19 +38,39 @@ io.on("connection", (socket) => {
       roomCode: socket.roomCode,
     });
   }
-
-  console.log(users);
-  console.log(socket.roomCode)
-  const requstedRoomCode = io.of("/").adapter.rooms.get(socket.roomCode)
+  const requstedRoomCode = io.of("/").adapter.rooms.get(socket.roomCode);
+  
   if (requstedRoomCode && requstedRoomCode.size > 1) {
     // there's too many people in the room!
     console.log("There's too many people in the room!")
     socket.roomCode = "";
     socket.emit("event://room-full", "soz");
-  } else {
+  } else if (requstedRoomCode && requstedRoomCode.size === 1) {
+    // let the opponent know someone has arrived
+    const waitingUser = users.filter(userObj => userObj.roomCode === socket.roomCode && userObj.userName !== socket.userName);
+    console.log("you've joined a room");
+    socket.emit("event://room-joined", {userName: socket.userName, roomCode: socket.roomCode, opponentName: waitingUser[0].userName});
+    socket.to(socket.roomCode).emit('event://opponent-joined', {opponentName: socket.userName});
     socket.join(socket.roomCode);
-    socket.emit("event://room-joined", {userName: socket.userName, roomCode: socket.roomCode});
+    io.to(socket.roomCode).emit('data://draft-characters', ["Ryu", "Ken", "Akuma", "Guile", "Abigail", "Chun-Li", "Blanka", "Ed"]);
+    if (getRandomInt(1, 3) === 1) {
+      socket.emit("request://ban-character");
+    } else {
+      socket.to(socket.roomCode).emit("request://ban-character");
+    }
+  } else {
+    // first person to join the room, wait for an opponent
+    console.log("you're the first person in the room")
+    socket.join(socket.roomCode);
+    socket.emit("event://room-created", {userName: socket.userName, roomCode: socket.roomCode});
   }
+
+  // a user has banned a character
+  // let the other user know which character, and request a ban from them
+  socket.on("user://ban-character", (characterName) => {
+    socket.to(socket.roomCode).emit('data://banned-character', characterName);
+    socket.to(socket.roomCode).emit('request://ban-character');
+  })
   
   
   socket.on("disconnect", () => {

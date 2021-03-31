@@ -15,9 +15,10 @@ const Home = () => {
   let history = useHistory();
 
   useEffect(() => {
-    console.log(userName)
     userName !== "" && roomCode !== "" &&
       history.push(`/draft/${roomCode}`)
+      
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userName, roomCode]);
 
   return (

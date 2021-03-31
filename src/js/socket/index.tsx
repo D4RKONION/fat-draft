@@ -3,10 +3,10 @@
 import { createContext } from 'react'
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { setRoomCode, setUserName } from '../actions';
+import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacters } from '../actions';
 
 
-const WebSocketContext = createContext(null)
+const WebSocketContext = createContext(null);
 
 export { WebSocketContext };
 
@@ -17,13 +17,10 @@ const WebSocketProvider = ({ children }: {children: any}) => {
   let ws: any;
   const dispatch = useDispatch();
 
-  const sendMessage = (roomId: string, message: string) => {
-    const payload = {
-      roomId: roomId,
-      data: message
-    }
-    socket.emit("event://send-message", JSON.stringify(payload));
-    // dispatch(updateChatLog(payload));
+  const banCharacter = (characterName: string) => {
+    socket.emit("user://ban-character", characterName);
+    dispatch(setBannedCharacters({bannedBy: "user", bannedCharacter: characterName}));
+    dispatch(setUserState("inactive"))
   }
 
   if (!socket) {
@@ -34,15 +31,45 @@ const WebSocketProvider = ({ children }: {children: any}) => {
       console.log(event, args);
     });
 
-    socket.on("event://room-joined", (payload: {userName: string, roomCode: string}) => {
-      console.log("Handling joined room");
-      dispatch(setUserName(payload.userName))
+    // room created, waiting on opponent
+    socket.on("event://room-created", (payload: {userName: string, roomCode: string}) => {
+      dispatch(setUserName(payload.userName));
       dispatch(setRoomCode(payload.roomCode));
     })
 
+    // opponent joined your room
+    socket.on("event://opponent-joined", (payload: {opponentName: string}) => {
+      dispatch(setOpponentName(payload.opponentName));
+    })
+
+    // you joined an opponent's room
+    socket.on("event://room-joined", (payload: {userName: string, roomCode: string, opponentName?: string}) => {
+      dispatch(setUserName(payload.userName));
+      dispatch(setRoomCode(payload.roomCode));
+      console.log(payload.opponentName)
+      payload.opponentName && dispatch(setOpponentName(payload.opponentName));
+    })
+
+    // list of draftable characters received
+    socket.on("data://draft-characters", (characterList: string[]) => {
+      dispatch(setDraftCharacters(characterList));
+    })
+
+    // you may ban a character
+    socket.on("request://ban-character", () => {
+      dispatch(setUserState("ban"))
+    })
+
+    // a character has been banned by the other user
+    socket.on("data://banned-character", (bannedCharacter: string) => {
+      dispatch(setBannedCharacters({bannedBy: "opponent", bannedCharacter }))
+    })
+    
+
+
     ws = {
       socket: socket,
-      sendMessage
+      banCharacter
     }
   }
 
