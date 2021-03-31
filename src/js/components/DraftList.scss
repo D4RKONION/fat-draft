@@ -8,19 +8,28 @@
   max-width: 1000px;
   margin: 0 auto;
 
-  span {
+  div {
     flex: 1 0 auto;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
     font-size: 22px;
     border: black 1px solid;
+    box-sizing: border-box;
     width: 200px;
     height: 200px;
     margin: 10px 10px;
 
     cursor: pointer;
+
+    &.banned {
+      border: red solid 5px;
+      h3 {
+        opacity: 0.4;
+      }
+    }
   }
 }

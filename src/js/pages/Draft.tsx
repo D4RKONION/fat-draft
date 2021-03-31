@@ -34,8 +34,15 @@ const Draft = () => {
     <div className={styles.draft}>
       <h1>Draft</h1>
       <h2>{userName} VS {opponentName ? opponentName : "???"}</h2>
-      {opponentName && userState === "inactive" &&
-        <h3>Wait for {opponentName} to make a choice</h3>
+      {
+        opponentName && userState === "inactive" ?
+          <h3>Wait for {opponentName} to make a choice</h3>
+        : opponentName && userState === "ban" ?
+          <h3>Choose a character to ban</h3>
+        : opponentName && userState === "pick" ?
+          <h3>Choose a character to play as</h3>
+        :
+          <h3>Waiting for an opponent to join</h3>
       }
       <DraftList></DraftList>
     </div>

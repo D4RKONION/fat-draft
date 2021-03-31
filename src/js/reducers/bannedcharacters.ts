@@ -1,6 +1,6 @@
 import { SET_BANNED_CHARACTERS } from "../actions";
 
-type bannedCharactersReducerState = {user: string[], opponent: string[]};
+type bannedCharactersReducerState = {[key: string]: any}
 
 type bannedCharactersReducerAction = {
   type: typeof SET_BANNED_CHARACTERS;
