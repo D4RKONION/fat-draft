@@ -2,8 +2,10 @@
 // https://www.pluralsight.com/guides/using-web-sockets-in-your-reactredux-app
 import { createContext } from 'react'
 import { io } from 'socket.io-client';
-import { useDispatch } from 'react-redux';
-import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacters } from '../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacters, setPickedCharacter } from '../actions';
+import { bannedCharactersSelector } from '../selectors';
+import store from '../store';
 
 
 const WebSocketContext = createContext(null);
@@ -15,12 +17,18 @@ const WebSocketProvider = ({ children }: {children: any}) => {
   const ENDPOINT = "http://127.0.0.1:4001";
   let socket: any;
   let ws: any;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const banCharacter = (characterName: string) => {
-    socket.emit("user://ban-character", characterName);
+    socket.emit("user://select-character", {selectionType: "banned", characterName});
     dispatch(setBannedCharacters({bannedBy: "user", bannedCharacter: characterName}));
-    dispatch(setUserState("inactive"))
+    dispatch(setUserState("inactive"));
+  }
+
+  const pickCharacter = (characterName: string) => {
+    socket.emit("user://select-character", {selectionType: "picked", characterName});
+    dispatch(setPickedCharacter({pickedBy: "user", pickedCharacter: characterName}));
+    dispatch(setUserState("inactive"));
   }
 
   if (!socket) {
@@ -60,16 +68,27 @@ const WebSocketProvider = ({ children }: {children: any}) => {
       dispatch(setUserState("ban"))
     })
 
+    // you may ban a character
+    socket.on("request://pick-character", () => {
+      dispatch(setUserState("pick"))
+    })
+
     // a character has been banned by the other user
     socket.on("data://banned-character", (bannedCharacter: string) => {
       dispatch(setBannedCharacters({bannedBy: "opponent", bannedCharacter }))
+    })
+
+    // a character has been picked by the other user
+    socket.on("data://picked-character", (pickedCharacter: string) => {
+      dispatch(setPickedCharacter({pickedBy: "opponent", pickedCharacter }))
     })
     
 
 
     ws = {
       socket: socket,
-      banCharacter
+      banCharacter,
+      pickCharacter
     }
   }
 

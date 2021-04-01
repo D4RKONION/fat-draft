@@ -6,4 +6,5 @@ export const opponentNameSelector =  (state: RootState) => state.opponentNameSta
 export const userStateSelector =  (state: RootState) => state.userStateState;
 export const draftCharactersSelector =  (state: RootState) => state.draftCharactersState;
 export const bannedCharactersSelector = (state: RootState) => state.bannedCharactersState;
+export const pickedCharactersSelector = (state: RootState) => state.pickedCharactersState;
 

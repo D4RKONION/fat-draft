@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { setRoomCode } from "../actions";
-import styles from './Draft.module.scss'; 
+import './Draft.scss'; 
 import { opponentNameSelector, roomCodeSelector, userNameSelector, userStateSelector } from "../selectors";
 import DraftList from "../components/DraftList";
 
@@ -31,12 +31,12 @@ const Draft = () => {
   }, []);
 
   return (
-    <div className={styles.draft}>
+    <div className="draft">
       <h1>Draft</h1>
-      <h2>{userName} VS {opponentName ? opponentName : "???"}</h2>
+      <h2><span className="user">{userName}</span> VS <span className="opponent">{opponentName ? opponentName : "???"}</span></h2>
       {
         opponentName && userState === "inactive" ?
-          <h3>Wait for {opponentName} to make a choice</h3>
+          <h3>Waiting for <span className="opponent">{opponentName}</span> to make a choice</h3>
         : opponentName && userState === "ban" ?
           <h3>Choose a character to ban</h3>
         : opponentName && userState === "pick" ?

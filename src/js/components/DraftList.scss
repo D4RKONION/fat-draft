@@ -8,6 +8,15 @@
   max-width: 1000px;
   margin: 0 auto;
 
+  .user {
+    color: #db7734;
+    border-color: #db7734;
+  }
+  .opponent {
+    color: #7734db;
+    border-color: #7734db;
+  }
+
   div {
     flex: 1 0 auto;
 
@@ -17,7 +26,7 @@
     align-items: center;
 
     font-size: 22px;
-    border: black 1px solid;
+    border: black 5px solid;
     box-sizing: border-box;
     width: 200px;
     height: 200px;
@@ -26,10 +35,16 @@
     cursor: pointer;
 
     &.banned {
-      border: red solid 5px;
+      border: #00000020 solid 5px;
       h3 {
-        opacity: 0.4;
+        opacity: 0.2;
+        text-decoration: line-through;
       }
     }
+
+    &.picked {
+      border: solid 5px;
+    }
+    
   }
 }

@@ -6,6 +6,7 @@ import { opponentNameReducer } from './opponentname';
 import { draftCharactersReducer } from './draftcharacters';
 import { userStateReducer } from './userstate';
 import { bannedCharactersReducer } from './bannedcharacters';
+import { pickedCharactersReducer } from './pickedcharacters';
 
 
 const rootReducer = combineReducers({
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   opponentNameState: opponentNameReducer,
   userStateState: userStateReducer,
   draftCharactersState: draftCharactersReducer,
-  bannedCharactersState: bannedCharactersReducer,  
+  bannedCharactersState: bannedCharactersReducer,
+  pickedCharactersState: pickedCharactersReducer,  
 });
 
 export default rootReducer;

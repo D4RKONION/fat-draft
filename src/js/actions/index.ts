@@ -5,6 +5,7 @@ export const SET_OPPONENT_NAME = "SET_OPPONENT_NAME";
 export const SET_DRAFT_CHARACTERS = "SET_DRAFT_CHARACTERS";
 export const SET_USER_STATE = "SET_USER_STATE";
 export const SET_BANNED_CHARACTERS = "SET_BANNED_CHARACTERS";
+export const SET_PICKED_CHARACTER = "SET_PICKED_CHARACTER";
 
 //action creators
 export const setUserName = (userName: string) => ({
@@ -35,6 +36,11 @@ export const setDraftCharacters = (characterList: string[]) => ({
 export const setBannedCharacters = (banData: {bannedBy: string, bannedCharacter: string}) => ({
   type: SET_BANNED_CHARACTERS,
   banData,
+})
+
+export const setPickedCharacter = (pickData: {pickedBy: string, pickedCharacter: string}) => ({
+  type: SET_PICKED_CHARACTER,
+  pickData,
 })
 
 
