@@ -38,7 +38,10 @@ const Draft = () => {
   return (
     <div className="draft">
       <PageHeader></PageHeader>
-      <h2><span className="user">{userName}</span> VS <span className="opponent">{opponentName ? opponentName : "???"}</span></h2>
+      {userName
+        ? <h2><span className="user">{userName}</span> VS <span className="opponent">{opponentName ? opponentName : "???"}</span></h2>
+        : <h2>Enter a name to join the draft</h2>
+      }
       {
         opponentName && userState === "inactive" ?
           <h3>Waiting for <span className="opponent">{opponentName}</span> to make a choice</h3>
@@ -52,7 +55,7 @@ const Draft = () => {
           <>
             <h3>Waiting for an opponent to join</h3>
             <h4>Invite</h4>
-            <p>{`http://localhost:3000/#/draft/${roomCode}`}</p>
+            <p>{`https://fullmeter.com/fatdraft/#/Draft/${roomCode}`}</p>
           </>
       }
       <DraftList></DraftList>

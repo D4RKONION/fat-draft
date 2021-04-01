@@ -43,8 +43,7 @@ const GAME_DETAILS = {
       "Urien",
       "Vega",
       "Zangief",
-      "Zeku (Old)",
-      "Zeku (Young)"
+      "Zeku",
     ],
   },
   'USF4': {

@@ -4,6 +4,7 @@ import "./DraftList.scss"
 
 import { WebSocketContext } from "../socket";
 import { useContext } from "react";
+import CharacterPortrait from "./CharacterPortrait";
 
 
 const DraftList = () => {
@@ -32,8 +33,11 @@ const DraftList = () => {
   return(
     <div className="draftList">
       {draftCharacters.map(characterName =>
-        <div
+        <CharacterPortrait
+          charName={characterName}
+          game="SFV"
           className={`
+            characterContainer
             ${bannedCharactersArray.includes(characterName) ? "banned" : ""}
             ${pickedCharactersObj["user"].includes(characterName) ? "user picked" : ""}
             ${pickedCharactersObj["opponent"].includes(characterName) ? "opponent picked" : ""}
@@ -49,9 +53,7 @@ const DraftList = () => {
               ws.pickCharacter(characterName);
             }
           }}
-        >
-          <h3>{characterName}</h3>
-        </div>
+        />
       )}
     </div>
   )

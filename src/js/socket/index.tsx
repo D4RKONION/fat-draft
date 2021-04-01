@@ -13,6 +13,9 @@ export { WebSocketContext };
 const WebSocketProvider = ({ children }: {children: any}) => {
   
   const ENDPOINT = "http://127.0.0.1:4001";
+  const PATH = "";
+  // const ENDPOINT = "https://fullmeter.com";
+  // const PATH = "/fatdraftserver"
   let socket: any;
   let ws: any;
   const dispatch = useDispatch()
@@ -31,7 +34,7 @@ const WebSocketProvider = ({ children }: {children: any}) => {
 
   if (!socket) {
     
-    socket = io(ENDPOINT, { autoConnect: false, extraHeaders: { username: "", roomcode: "" } });
+    socket = io(ENDPOINT, { path: PATH, autoConnect: false, extraHeaders: { username: "", roomcode: "" } });
 
     socket.onAny((event:any, ...args:any) => {
       console.log(event, args);

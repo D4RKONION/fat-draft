@@ -18,6 +18,13 @@ const io = socketIo(server, {
   },
 });
 
+// const io = socketIo(server, {
+//   path: "/fatdraftserver",
+//   cors: {
+//     origin: "https://fullmeter.com/fatdraft",
+//   },
+// });
+
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
