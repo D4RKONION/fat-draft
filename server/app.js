@@ -5,6 +5,7 @@ const socketIo = require("socket.io");
 
 const port = process.env.PORT || 4001;
 const index = require("./routes/index");
+const GAME_DETAILS = require("./constants/GameDetails.js");
 
 const app = express();
 app.use(index);
@@ -26,7 +27,6 @@ const tickers = {
   8: ["B1", "B2", "P1", "P2", "P2", "P1", "Q"]
 }
 const roomsData = {}
-
 
 io.on("connection", (socket) => {
   console.log("New client connected");
@@ -66,7 +66,7 @@ io.on("connection", (socket) => {
     socket.to(socket.roomCode).emit('event://opponent-joined', {opponentName: socket.userName});
     
 
-    // send both players the draft list and tell player 1 to choose a ban
+    // send both players the draft list, tell player1 to choose and player2 to standby
     io.to(socket.roomCode).emit('data://draft-characters', roomsData[socket.roomCode].draftCharacters);
     io.to(roomsData[socket.roomCode].playerOne).emit("request://ban-character");
     roomsData[socket.roomCode].tickerPosition++;
@@ -79,7 +79,7 @@ io.on("connection", (socket) => {
 
     // set up the room data
     roomsData[socket.roomCode] = {
-      "draftCharacters": ["Ryu", "Ken", "Akuma", "Guile", "Abigail", "Chun-Li", "Blanka", "Ed"],
+      "draftCharacters": GAME_DETAILS["SFV"].characterList.sort(() => Math.random() - Math.random()).slice(0, 8),
       "tickerPosition": 0,
       "playerOne": "",
       "playerTwo": "",
@@ -110,6 +110,8 @@ io.on("connection", (socket) => {
       } else {
         io.to(roomsData[socket.roomCode].playerTwo).emit("request://pick-character");
       }
+    } else if (nextAction.includes("Q")) {
+      io.to(socket.roomCode).emit(`event://draft-finished`);
     }
     roomsData[socket.roomCode].tickerPosition++;
   })
@@ -117,6 +119,16 @@ io.on("connection", (socket) => {
   
   socket.on("disconnect", () => {
     console.log("Client disconnected");
+    if (socket.id === roomsData[socket.roomCode].playerOne) {
+      roomsData[socket.roomCode].playerOne = "";
+    } else if (socket.id === roomsData[socket.roomCode].playerTwo) {
+      roomsData[socket.roomCode].playerTwo = "";
+    }
+
+    if (roomsData[socket.roomCode].playerOne === "" & roomsData[socket.roomCode].playerTwo === "") {
+      delete roomsData[socket.roomCode];
+    }
+    console.log(roomsData);
   });
 });
 

@@ -2,10 +2,8 @@
 // https://www.pluralsight.com/guides/using-web-sockets-in-your-reactredux-app
 import { createContext } from 'react'
 import { io } from 'socket.io-client';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacters, setPickedCharacter } from '../actions';
-import { bannedCharactersSelector } from '../selectors';
-import store from '../store';
 
 
 const WebSocketContext = createContext(null);
@@ -43,6 +41,7 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     socket.on("event://room-created", (payload: {userName: string, roomCode: string}) => {
       dispatch(setUserName(payload.userName));
       dispatch(setRoomCode(payload.roomCode));
+      dispatch(setUserState("inactive"));
     })
 
     // opponent joined your room
@@ -54,6 +53,7 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     socket.on("event://room-joined", (payload: {userName: string, roomCode: string, opponentName?: string}) => {
       dispatch(setUserName(payload.userName));
       dispatch(setRoomCode(payload.roomCode));
+      dispatch(setUserState("inactive"));
       console.log(payload.opponentName)
       payload.opponentName && dispatch(setOpponentName(payload.opponentName));
     })
@@ -65,12 +65,12 @@ const WebSocketProvider = ({ children }: {children: any}) => {
 
     // you may ban a character
     socket.on("request://ban-character", () => {
-      dispatch(setUserState("ban"))
+      dispatch(setUserState("ban"));
     })
 
     // you may ban a character
     socket.on("request://pick-character", () => {
-      dispatch(setUserState("pick"))
+      dispatch(setUserState("pick"));
     })
 
     // a character has been banned by the other user
@@ -81,6 +81,12 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     // a character has been picked by the other user
     socket.on("data://picked-character", (pickedCharacter: string) => {
       dispatch(setPickedCharacter({pickedBy: "opponent", pickedCharacter }))
+    })
+
+    // you joined an opponent's room
+    socket.on("event://draft-finished", () => {
+      dispatch(setUserState("finished"));
+      socket.disconnect();
     })
     
 

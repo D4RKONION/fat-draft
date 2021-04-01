@@ -1,9 +1,9 @@
-import { SET_BANNED_CHARACTERS } from "../actions";
+import { SET_BANNED_CHARACTERS, RESET_BANNED_CHARACTERS } from "../actions";
 
 type bannedCharactersReducerState = {[key: string]: any}
 
 type bannedCharactersReducerAction = {
-  type: typeof SET_BANNED_CHARACTERS;
+  type: typeof SET_BANNED_CHARACTERS | typeof RESET_BANNED_CHARACTERS;
   banData: {bannedBy: "user" | "opponent", bannedCharacter: string}
 }
 
@@ -16,6 +16,8 @@ export const bannedCharactersReducer = (state = defaultState, action: bannedChar
         ...state,
         [action.banData.bannedBy]: [...state[action.banData.bannedBy], action.banData.bannedCharacter],
       };
+    case RESET_BANNED_CHARACTERS:
+      return defaultState;
     default:
       return state;
   }

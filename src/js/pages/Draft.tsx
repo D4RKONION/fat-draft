@@ -5,6 +5,8 @@ import { setRoomCode } from "../actions";
 import './Draft.scss'; 
 import { opponentNameSelector, roomCodeSelector, userNameSelector, userStateSelector } from "../selectors";
 import DraftList from "../components/DraftList";
+import NameInput from "../components/NameInput";
+import PageHeader from "../components/PageHeader";
 
 const Draft = () => {
    
@@ -19,20 +21,23 @@ const Draft = () => {
 
   const slugs:{roomCodeSlug: string} = useParams();
 
-  
-
   useEffect(() => {
-    if (roomCode === "") {
+    if (roomCode === "" && slugs.roomCodeSlug) {
       dispatch(setRoomCode(slugs.roomCodeSlug));
-      history.push("/")
     }
-    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (userState === "finished") {
+      history.replace("/Results")
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userState]);
+
   return (
     <div className="draft">
-      <h1>Draft</h1>
+      <PageHeader></PageHeader>
       <h2><span className="user">{userName}</span> VS <span className="opponent">{opponentName ? opponentName : "???"}</span></h2>
       {
         opponentName && userState === "inactive" ?
@@ -41,8 +46,14 @@ const Draft = () => {
           <h3>Choose a character to ban</h3>
         : opponentName && userState === "pick" ?
           <h3>Choose a character to play as</h3>
+        : userState === "start" && slugs.roomCodeSlug !== ""  ?
+          <NameInput></NameInput>
         :
-          <h3>Waiting for an opponent to join</h3>
+          <>
+            <h3>Waiting for an opponent to join</h3>
+            <h4>Invite</h4>
+            <p>{`http://localhost:3000/#/draft/${roomCode}`}</p>
+          </>
       }
       <DraftList></DraftList>
     </div>

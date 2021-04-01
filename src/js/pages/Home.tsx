@@ -1,39 +1,42 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import NameInput from "../components/NameInput";
+import PageHeader from "../components/PageHeader";
 import { roomCodeSelector, userNameSelector } from "../selectors";
 import { WebSocketContext } from "../socket";
+import './Home.scss'
 
 const Home = () => {
 
   const ws = useContext<any>(WebSocketContext);
 
-  const [userNameText, setUserNameText] = useState("");
   const userName = useSelector(userNameSelector);
   const roomCode = useSelector(roomCodeSelector);
   
   let history = useHistory();
 
   useEffect(() => {
-    userName !== "" && roomCode !== "" &&
-      history.push(`/draft/${roomCode}`)
+    ws.socket.connected && userName !== "" && roomCode !== "" &&
+      history.push(`/Draft/${roomCode}`)
       
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userName, roomCode]);
 
   return (
-    <>
-      <form>
-        <label>Name</label>
-        <input value={userNameText} onChange={e => setUserNameText(e.target.value)}></input>
-        <button onClick={e => {
+    <div className="home">
+      <PageHeader></PageHeader>
+      {!userName
+        ? <NameInput></NameInput>
+        : <button onClick={e => {
           e.preventDefault();
-          ws.socket.io.opts.extraHeaders.username = userNameText;
+          ws.socket.io.opts.extraHeaders.username = userName.substring(0, userName.indexOf("#"));
           ws.socket.io.opts.extraHeaders.roomcode = roomCode;
           ws.socket.connect()
-        }}>Send</button>
-      </form>
-    </>
+        }}>Draft!</button>
+      }
+      
+    </div>
 
   );
 }
