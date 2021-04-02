@@ -3,7 +3,7 @@
 import { createContext } from 'react'
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacters, setPickedCharacter } from '../actions';
+import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacters, setPickedCharacter, setUserLevel } from '../actions';
 
 
 const WebSocketContext = createContext(null);
@@ -32,13 +32,22 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     dispatch(setUserState("inactive"));
   }
 
+  const startNewDraft = (settings: {activeGame: string, numberOfCharacters: string, numberOfPicks: string}) => {
+    socket.emit("user://start-new-draft", settings);
+  }
+
   if (!socket) {
     
-    socket = io(ENDPOINT, { path: PATH, autoConnect: false, extraHeaders: { username: "", roomcode: "" } });
+    socket = io(ENDPOINT, { path: PATH, autoConnect: false, extraHeaders: { username: "", roomcode: "", activegame: "", numberofcharacters: "", numberofpicks: "", }});
 
     socket.onAny((event:any, ...args:any) => {
       console.log(event, args);
     });
+
+    // tell a user whether they are host or guest. Guests cannot set settings
+    socket.on("data://user-level", (userLevel: string) => {
+      dispatch(setUserLevel(userLevel));
+    })
 
     // room created, waiting on opponent
     socket.on("event://room-created", (payload: {userName: string, roomCode: string}) => {
@@ -63,6 +72,7 @@ const WebSocketProvider = ({ children }: {children: any}) => {
 
     // list of draftable characters received
     socket.on("data://draft-characters", (characterList: string[]) => {
+      dispatch(setUserState("inactive"));
       dispatch(setDraftCharacters(characterList));
     })
 
@@ -86,10 +96,9 @@ const WebSocketProvider = ({ children }: {children: any}) => {
       dispatch(setPickedCharacter({pickedBy: "opponent", pickedCharacter }))
     })
 
-    // you joined an opponent's room
+    // the draft has ended
     socket.on("event://draft-finished", () => {
       dispatch(setUserState("finished"));
-      socket.disconnect();
     })
     
 
@@ -97,7 +106,8 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     ws = {
       socket: socket,
       banCharacter,
-      pickCharacter
+      pickCharacter,
+      startNewDraft
     }
   }
 

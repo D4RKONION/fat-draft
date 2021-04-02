@@ -36,8 +36,11 @@ const DraftList = () => {
         <CharacterPortrait
           charName={characterName}
           game="SFV"
+          style={
+            draftCharacters.length === 16 ?
+              {width: "10%"} : null
+          }
           className={`
-            characterContainer
             ${bannedCharactersArray.includes(characterName) ? "banned" : ""}
             ${pickedCharactersObj["user"].includes(characterName) ? "user picked" : ""}
             ${pickedCharactersObj["opponent"].includes(characterName) ? "opponent picked" : ""}

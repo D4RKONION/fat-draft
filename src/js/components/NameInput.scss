@@ -1,13 +1,12 @@
 .nameInput {
+  margin-top: 50px;
   label {
     display: block;
   }
-  button, input {
+input {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
-  }
-input {
     width: 30%;
     max-width: 475px;
     min-width: 287px;

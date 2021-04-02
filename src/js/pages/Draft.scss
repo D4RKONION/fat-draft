@@ -6,4 +6,15 @@
   .opponent {
     color: #7734db;
   }
+
+  .waitingImage {
+    animation: waitingImage-spinning infinite 4s linear;
+    width: 80px;
+  }
+  
+  @keyframes waitingImage-spinning {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+  }
 }
+

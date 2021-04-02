@@ -7,6 +7,7 @@ import {
 import Draft from "./js/pages/Draft";
 import Home from "./js/pages/Home";
 import Results from "./js/pages/Results";
+import "./App.scss"
 
 
 

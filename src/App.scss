@@ -1,0 +1,10 @@
+button {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  &.soloButton {
+    display: block;
+    width: 200px;
+    margin: 40px auto;
+  }
+}

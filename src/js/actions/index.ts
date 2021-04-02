@@ -1,5 +1,6 @@
 //action types
 export const SET_USER_NAME = "SET_USER_NAME";
+export const SET_USER_LEVEL = "SET_USER_LEVEL";
 export const SET_ROOM_CODE = "SET_ROOM_CODE";
 export const SET_OPPONENT_NAME = "SET_OPPONENT_NAME";
 export const SET_DRAFT_CHARACTERS = "SET_DRAFT_CHARACTERS";
@@ -13,6 +14,11 @@ export const RESET_PICKED_CHARACTERS = "RESET_PICKED_CHARACTERS";
 export const setUserName = (userName: string) => ({
   type: SET_USER_NAME,
   userName,
+})
+
+export const setUserLevel = (userLevel: string) => ({
+  type: SET_USER_LEVEL,
+  userLevel,
 })
 
 export const setRoomCode = (roomCode: string) => ({
@@ -57,9 +63,13 @@ export const resetPickedCharacters = (confirm: Boolean) => ({
 
 export const actionCreators = {
   setUserName,
+  setUserLevel,
   setRoomCode,
   setOpponentName,
   setUserState,
   setDraftCharacters,
-  setBannedCharacters
+  setBannedCharacters,
+  resetBannedCharacters,
+  setPickedCharacter,
+  resetPickedCharacters
 }

@@ -1,0 +1,22 @@
+.option {
+
+  .optionButtons {
+    display: flex;
+    width: 54%;
+    max-width: 650px;
+    margin: 0 auto;
+
+    .button {
+      border: 1px black solid;
+      flex: 1 0 0;
+      padding: 10px 0;
+      cursor: pointer;
+      transition: all ease-in-out 0.07s;
+      &.active {
+        background: #3498db;
+        color: white;
+        font-weight: bold;
+      }
+    }
+  }
+}

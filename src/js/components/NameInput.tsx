@@ -15,6 +15,7 @@ const NameInput = () => {
       <input placeholder="Enter a username!" value={userNameText} onChange={e => setUserNameText(e.target.value)}></input>
       <button onClick={e => {
         e.preventDefault();
+        if (!userNameText) {return false};
         ws.socket.io.opts.extraHeaders.username = userNameText;
         ws.socket.io.opts.extraHeaders.roomcode = roomCode;
         ws.socket.connect()

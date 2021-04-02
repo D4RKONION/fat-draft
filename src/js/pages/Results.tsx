@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { resetBannedCharacters, resetPickedCharacters, setBannedCharacters, setUserState } from '../actions';
+import { resetBannedCharacters, resetPickedCharacters, setUserState } from '../actions';
+import CharacterPortrait from '../components/CharacterPortrait';
 import PageHeader from '../components/PageHeader';
 import { opponentNameSelector, pickedCharactersSelector, userNameSelector } from '../selectors';
 import './Results.scss'
@@ -12,25 +14,57 @@ const Results = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  useEffect(() => {
+    if (!userName) {
+      history.push("/Home")
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   return (
-    <div className="results">
+    <>
       <PageHeader></PageHeader>
-      <h1>Results</h1>
-      <h2>{userName} (you)</h2>
-      {pickedCharactersObj.user.map((charName:string) => <h3>{charName}</h3>)}
+      <div className="results">
+        <div className="userData">
+          <h2 className="user">{userName}</h2>
+          <div className="characterList">
+            {pickedCharactersObj.user.map((charName:string) => 
+              <CharacterPortrait
+                charName={charName}
+                game="SFV"
+                className="characterContainer user picked"
+                key={`char-block-${charName}`}
+              />
+            )}
+          </div>
+        </div>
 
-      <h2>{opponentName}</h2>      
-      {pickedCharactersObj.opponent.map((charName:string) => <h3>{charName}</h3>)}
+        <h1>VS</h1>
 
-      <div onClick={() => {
+        <div className="opponentData">
+          <h2 className="opponent">{opponentName}</h2>   
+          <div className="characterList">   
+            {pickedCharactersObj.opponent.map((charName:string) => 
+              <CharacterPortrait
+                charName={charName}
+                game="SFV"
+                className="characterContainer opponent picked"
+                key={`char-block-${charName}`}
+              />
+            )}
+          </div>
+        </div>        
+      </div>
+      <button className="soloButton" onClick={e => {
+        e.preventDefault();
         dispatch(setUserState("start"));
         dispatch(resetBannedCharacters(true));
         dispatch(resetPickedCharacters(true));
         history.push("/Home")
-      }}>Draft Again</div>
-      
-    </div>
+      }}>Draft Again</button>
+    </>
+    
   )
 }
 
