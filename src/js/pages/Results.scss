@@ -4,20 +4,29 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  .user {
-    color: #db7734;
+  .playerData {
+    width: 40%;
+    .user {
+      color: #db7734;
+    }
+    .opponent {
+      color: #7734db;
+    }
+    .characterList {
+      display: flex;
+      justify-content: center;
+    }
+
+    h3 {
+      margin: 40px 0;
+    }
   }
-  .opponent {
-    color: #7734db;
-  }
-  .characterList {
-    display: flex;
-    justify-content: center;
-  }
+
   h1 {
-    margin: 70px 0 0;
+    margin: 0 0 55px;
     color: #3498db;
     font-size: 76px;
   }
+  
   
 }

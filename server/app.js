@@ -97,9 +97,15 @@ io.on("connection", (socket) => {
     socket.to(socket.roomCode).emit('event://opponent-joined', {opponentName: socket.userName});
     
 
-    // send both players the draft list, tell player1 to choose and player2 to standby
+    // send both players the draft list, tell player1 to choose
     io.to(socket.roomCode).emit('data://draft-characters', roomsData[socket.roomCode].draftCharacters);
-    io.to(roomsData[socket.roomCode].playerOne).emit("request://ban-character");
+
+    const numOfChars = `${roomsData[socket.roomCode].numberOfCharacters} char`;
+    const numOfPicks = `${roomsData[socket.roomCode].numberOfPicks} pick`;
+    const nextAction = tickers[numOfChars][numOfPicks][roomsData[socket.roomCode].tickerPosition];
+    nextAction.includes("B")
+      ? io.to(roomsData[socket.roomCode].playerOne).emit("request://ban-character")
+      : io.to(roomsData[socket.roomCode].playerOne).emit("request://pick-character") 
     roomsData[socket.roomCode].tickerPosition++;
 
   } else {
@@ -153,8 +159,11 @@ io.on("connection", (socket) => {
     roomsData[socket.roomCode].tickerPosition++;
   })
 
+  socket.on("user://vote-redraft", () => {
+    socket.to(socket.roomCode).emit('event://opponent-vote-redraft');
+  })
+
   socket.on("user://start-new-draft", ({activeGame, numberOfCharacters, numberOfPicks}) => {
-    console.log("hi")
     const prevPlayerOne = roomsData[socket.roomCode].playerOne;
     const prevPlayerTwo = roomsData[socket.roomCode].playerTwo
 
@@ -170,7 +179,12 @@ io.on("connection", (socket) => {
     console.log(roomsData[socket.roomCode])
 
     io.to(socket.roomCode).emit('data://draft-characters', roomsData[socket.roomCode].draftCharacters);
-    io.to(roomsData[socket.roomCode].playerOne).emit("request://ban-character");
+    const numOfChars = `${roomsData[socket.roomCode].numberOfCharacters} char`;
+    const numOfPicks = `${roomsData[socket.roomCode].numberOfPicks} pick`;
+    const nextAction = tickers[numOfChars][numOfPicks][roomsData[socket.roomCode].tickerPosition];
+    nextAction.includes("B")
+      ? io.to(roomsData[socket.roomCode].playerOne).emit("request://ban-character")
+      : io.to(roomsData[socket.roomCode].playerOne).emit("request://pick-character") 
     roomsData[socket.roomCode].tickerPosition++;
   });
   

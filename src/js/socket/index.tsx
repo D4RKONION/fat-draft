@@ -3,7 +3,9 @@
 import { createContext } from 'react'
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacters, setPickedCharacter, setUserLevel } from '../actions';
+import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacters, setPickedCharacter, setUserLevel, setOpponentIsConnected, setOpponentState } from '../actions';
+import { useHistory } from 'react-router';
+import { User } from '../types';
 
 
 const WebSocketContext = createContext(null);
@@ -20,6 +22,8 @@ const WebSocketProvider = ({ children }: {children: any}) => {
   let ws: any;
   const dispatch = useDispatch()
 
+  let history = useHistory();
+
   const banCharacter = (characterName: string) => {
     socket.emit("user://select-character", {selectionType: "banned", characterName});
     dispatch(setBannedCharacters({bannedBy: "user", bannedCharacter: characterName}));
@@ -30,6 +34,11 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     socket.emit("user://select-character", {selectionType: "picked", characterName});
     dispatch(setPickedCharacter({pickedBy: "user", pickedCharacter: characterName}));
     dispatch(setUserState("inactive"));
+  }
+
+  const voteRedraft = () => {
+    dispatch(setUserState("requesting-redraft"));
+    socket.emit("user://vote-redraft");
   }
 
   const startNewDraft = (settings: {activeGame: string, numberOfCharacters: string, numberOfPicks: string}) => {
@@ -45,7 +54,7 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     });
 
     // tell a user whether they are host or guest. Guests cannot set settings
-    socket.on("data://user-level", (userLevel: string) => {
+    socket.on("data://user-level", (userLevel: User["level"]) => {
       dispatch(setUserLevel(userLevel));
     })
 
@@ -59,6 +68,7 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     // opponent joined your room
     socket.on("event://opponent-joined", (payload: {opponentName: string}) => {
       dispatch(setOpponentName(payload.opponentName));
+      dispatch(setOpponentIsConnected(true));
     })
 
     // you joined an opponent's room
@@ -100,13 +110,17 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     socket.on("event://draft-finished", () => {
       dispatch(setUserState("finished"));
     })
-    
 
+    // the opponent has voted to redraft
+    socket.on("event://opponent-vote-redraft", () => {
+      dispatch(setOpponentState("requesting-redraft"));
+    })
 
     ws = {
       socket: socket,
       banCharacter,
       pickCharacter,
+      voteRedraft,
       startNewDraft
     }
   }

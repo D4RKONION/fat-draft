@@ -1,21 +1,17 @@
 import { combineReducers } from 'redux';
 
-import { userNameReducer } from './username';
+import { userReducer } from './user';
 import { roomCodeReducer } from './roomcode';
-import { userLevelReducer } from './userlevel';
-import { opponentNameReducer } from './opponentname';
+import { opponentReducer } from './opponent';
 import { draftCharactersReducer } from './draftcharacters';
-import { userStateReducer } from './userstate';
 import { bannedCharactersReducer } from './bannedcharacters';
 import { pickedCharactersReducer } from './pickedcharacters';
 
 
 const rootReducer = combineReducers({
-  userNameState: userNameReducer,
+  userState: userReducer,
   roomCodeState: roomCodeReducer,
-  userLevelState: userLevelReducer,
-  opponentNameState: opponentNameReducer,
-  userStateState: userStateReducer,
+  opponentState: opponentReducer,
   draftCharactersState: draftCharactersReducer,
   bannedCharactersState: bannedCharactersReducer,
   pickedCharactersState: pickedCharactersReducer,  

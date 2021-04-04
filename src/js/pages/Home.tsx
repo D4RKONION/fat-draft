@@ -28,7 +28,7 @@ const Home = () => {
     <div className="home">
       <PageHeader></PageHeader>
       <div className="homeContent">
-        {(userLevel === "" || userLevel === "host") &&
+        {(userLevel === "unset" || userLevel === "host") &&
           <Settings></Settings>
         }
         
