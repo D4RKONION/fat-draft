@@ -4,7 +4,7 @@ type pickedCharactersReducerState = {[key: string]: any}
 
 type pickedCharactersReducerAction = {
   type: typeof SET_PICKED_CHARACTER | typeof RESET_PICKED_CHARACTERS;
-  pickData: {pickedBy: "user" | "opponent", pickedCharacter: string}
+  payload: {player: "user" | "opponent", character: string}
 }
 
 const defaultState: pickedCharactersReducerState = {user: [], opponent: []};
@@ -14,7 +14,7 @@ export const pickedCharactersReducer = (state = defaultState, action: pickedChar
     case SET_PICKED_CHARACTER:
       return {
         ...state,
-        [action.pickData.pickedBy]: [...state[action.pickData.pickedBy], action.pickData.pickedCharacter],
+        [action.payload.player]: [...state[action.payload.player], action.payload.character],
       };
     case RESET_PICKED_CHARACTERS:
       return defaultState;

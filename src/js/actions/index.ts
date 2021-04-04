@@ -9,7 +9,7 @@ export const SET_OPPONENT_IS_CONNECTED = "SET_OPPONENT_IS_CONNECTED";
 export const SET_OPPONENT_STATE = "SET_OPPONENT_STATE";
 export const SET_DRAFT_CHARACTERS = "SET_DRAFT_CHARACTERS";
 export const SET_USER_STATE = "SET_USER_STATE";
-export const SET_BANNED_CHARACTERS = "SET_BANNED_CHARACTERS";
+export const SET_BANNED_CHARACTER = "SET_BANNED_CHARACTER";
 export const RESET_BANNED_CHARACTERS = "RESET_BANNED_CHARACTERS";
 export const SET_PICKED_CHARACTER = "SET_PICKED_CHARACTER";
 export const RESET_PICKED_CHARACTERS = "RESET_PICKED_CHARACTERS";
@@ -55,18 +55,18 @@ export const setDraftCharacters = (characterList: string[]) => ({
   characterList,
 })
 
-export const setBannedCharacters = (banData: {bannedBy: string, bannedCharacter: string}) => ({
-  type: SET_BANNED_CHARACTERS,
-  banData,
+export const setBannedCharacter = (payload: {player: string, character: string}) => ({
+  type: SET_BANNED_CHARACTER,
+  payload,
 })
 export const resetBannedCharacters = (confirm: Boolean) => ({
   type: RESET_BANNED_CHARACTERS,
   confirm,
 })
 
-export const setPickedCharacter = (pickData: {pickedBy: string, pickedCharacter: string}) => ({
+export const setPickedCharacter = (payload: {player: string, character: string}) => ({
   type: SET_PICKED_CHARACTER,
-  pickData,
+  payload,
 })
 export const resetPickedCharacters = (confirm: Boolean) => ({
   type: RESET_PICKED_CHARACTERS,
@@ -82,7 +82,7 @@ export const actionCreators = {
   setOpponentName,
   setUserState,
   setDraftCharacters,
-  setBannedCharacters,
+  setBannedCharacter,
   resetBannedCharacters,
   setPickedCharacter,
   resetPickedCharacters

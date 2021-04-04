@@ -103,6 +103,11 @@ io.on("connection", (socket) => {
     const numOfChars = `${roomsData[socket.roomCode].numberOfCharacters} char`;
     const numOfPicks = `${roomsData[socket.roomCode].numberOfPicks} pick`;
     const nextAction = tickers[numOfChars][numOfPicks][roomsData[socket.roomCode].tickerPosition];
+    
+    if (!nextAction) {
+      return false;
+    }
+    
     nextAction.includes("B")
       ? io.to(roomsData[socket.roomCode].playerOne).emit("request://ban-character")
       : io.to(roomsData[socket.roomCode].playerOne).emit("request://pick-character") 
@@ -138,8 +143,11 @@ io.on("connection", (socket) => {
     const numOfChars = `${roomsData[socket.roomCode].numberOfCharacters} char`;
     const numOfPicks = `${roomsData[socket.roomCode].numberOfPicks} pick`;
     const nextAction = tickers[numOfChars][numOfPicks][roomsData[socket.roomCode].tickerPosition];
-    
 
+    if (!nextAction) {
+      return false;
+    }
+    
     if (nextAction.includes("B")) {
       if (nextAction.includes("1")) {
         io.to(roomsData[socket.roomCode].playerOne).emit("request://ban-character");
@@ -182,6 +190,11 @@ io.on("connection", (socket) => {
     const numOfChars = `${roomsData[socket.roomCode].numberOfCharacters} char`;
     const numOfPicks = `${roomsData[socket.roomCode].numberOfPicks} pick`;
     const nextAction = tickers[numOfChars][numOfPicks][roomsData[socket.roomCode].tickerPosition];
+    
+    if (!nextAction) {
+      return false;
+    }
+
     nextAction.includes("B")
       ? io.to(roomsData[socket.roomCode].playerOne).emit("request://ban-character")
       : io.to(roomsData[socket.roomCode].playerOne).emit("request://pick-character") 

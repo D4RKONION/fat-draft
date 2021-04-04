@@ -3,7 +3,7 @@
 import { createContext } from 'react'
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacters, setPickedCharacter, setUserLevel, setOpponentIsConnected, setOpponentState } from '../actions';
+import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacter, setPickedCharacter, setUserLevel, setOpponentIsConnected, setOpponentState } from '../actions';
 import { useHistory } from 'react-router';
 import { User } from '../types';
 
@@ -26,13 +26,13 @@ const WebSocketProvider = ({ children }: {children: any}) => {
 
   const banCharacter = (characterName: string) => {
     socket.emit("user://select-character", {selectionType: "banned", characterName});
-    dispatch(setBannedCharacters({bannedBy: "user", bannedCharacter: characterName}));
+    dispatch(setBannedCharacter({player: "user", character: characterName}));
     dispatch(setUserState("inactive"));
   }
 
   const pickCharacter = (characterName: string) => {
     socket.emit("user://select-character", {selectionType: "picked", characterName});
-    dispatch(setPickedCharacter({pickedBy: "user", pickedCharacter: characterName}));
+    dispatch(setPickedCharacter({player: "user", character: characterName}));
     dispatch(setUserState("inactive"));
   }
 
@@ -97,13 +97,13 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     })
 
     // a character has been banned by the other user
-    socket.on("data://banned-character", (bannedCharacter: string) => {
-      dispatch(setBannedCharacters({bannedBy: "opponent", bannedCharacter }))
+    socket.on("data://banned-character", (character: string) => {
+      dispatch(setBannedCharacter({player: "opponent", character }));
     })
 
     // a character has been picked by the other user
-    socket.on("data://picked-character", (pickedCharacter: string) => {
-      dispatch(setPickedCharacter({pickedBy: "opponent", pickedCharacter }))
+    socket.on("data://picked-character", (character: string) => {
+      dispatch(setPickedCharacter({player: "opponent", character }));
     })
 
     // the draft has ended

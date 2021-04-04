@@ -25,9 +25,9 @@ const Home = () => {
   }, [userState]);
 
   return (
-    <div className="home">
+    <>
       <PageHeader></PageHeader>
-      <div className="homeContent">
+      <div className="home">
         {(userLevel === "unset" || userLevel === "host") &&
           <Settings></Settings>
         }
@@ -43,9 +43,7 @@ const Home = () => {
         </>
       }
       </div>
-      
-      
-    </div>
+    </>
 
   );
 }

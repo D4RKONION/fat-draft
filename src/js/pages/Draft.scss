@@ -8,12 +8,26 @@
   }
 
   .waitingImage {
-    animation: waitingImage-spinning infinite 4s linear;
+    animation: waitingImage-spinning infinite 7s linear;
     width: 80px;
+  }
+  .draftLog {
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: left;
+    list-style: none;
+    margin: 40px auto 0;
+    padding: 15px 38px;
+    width: 50%;
+    max-width: 400px;
+    min-height: 24px;
+    background: #ededed;
+    border-radius: 7px;
+    font-family: Courier New;
   }
   
   @keyframes waitingImage-spinning {
-    from { transform: rotate(360deg); }
+    from { transform: rotate(-360deg); }
     to { transform: rotate(0deg); }
   }
 }

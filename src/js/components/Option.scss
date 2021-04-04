@@ -1,17 +1,17 @@
 .option {
+  margin: 0 10px 40px;
+  h2 {
+    margin: 0 0 6px;
+  }
 
   .optionButtons {
-    display: flex;
-    width: 54%;
-    max-width: 650px;
-    margin: 0 auto;
 
     .button {
       border: 1px black solid;
-      flex: 1 0 0;
-      padding: 10px 0;
+      padding: 10px 30px;
       cursor: pointer;
       transition: all ease-in-out 0.07s;
+      display: inline-block;
       &.active {
         background: #3498db;
         color: white;
