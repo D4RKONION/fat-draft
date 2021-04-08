@@ -3,7 +3,7 @@
   flex-direction: row;
   text-align: center;
   .playerData {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
 
     display: flex;
     flex-direction: column;
@@ -35,6 +35,7 @@
     .characterList {
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
     }
     .soloButton {
       background: #db7734;
@@ -56,12 +57,10 @@
       margin: 0;
       height: calc(50vh - 27.5px);
       justify-content: center;
-
       h2 {
         font-size: 24px;
         margin: 0;
       }
-      
       h3, .soloButton {
         margin: 10px auto;
       }

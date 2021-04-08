@@ -49,6 +49,7 @@ const Results = () => {
             {pickedCharactersObj.user.map((charName:string) => 
               <CharacterPortrait
                 charName={charName}
+                style={{width: pickedCharactersObj.user.length > 2 ? "26%" : null}}
                 game="SFV"
                 className="characterContainer user picked"
                 key={`char-block-${charName}`}
@@ -72,6 +73,7 @@ const Results = () => {
             {pickedCharactersObj.opponent.map((charName:string) => 
               <CharacterPortrait
                 charName={charName}
+                style={{width: pickedCharactersObj.opponent.length > 2 ? "26%" : null}}
                 game="SFV"
                 className="characterContainer opponent picked"
                 key={`char-block-${charName}`}
