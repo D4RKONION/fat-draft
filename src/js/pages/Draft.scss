@@ -7,10 +7,34 @@
     color: #7734db;
   }
 
-  .waitingImage {
-    animation: waitingImage-spinning infinite 7s linear;
-    width: 80px;
+  .waitingContainer {
+    margin-top: 80px;
+
+    .imageBox {
+      margin-top: 20px;
+      img {
+        animation: waitingImage-spinning infinite 1.5s linear;
+        width: 80px;
+      }
+    }
+    .inviteBox {
+      background: #e9f4fb;
+      width: fit-content;
+      margin: 56px auto 10px;
+      padding: 1px 30px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+
   }
+  .joiningContainer {
+    margin-top: 80px;
+    .nameInput {
+      margin-top: 0;
+    }
+  }
+  
   .draftLog {
     display: flex;
     flex-direction: column-reverse;

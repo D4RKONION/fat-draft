@@ -37,5 +37,9 @@
     border-color: #7734db;
     background: #7734db5b;
   }
+
+  @media (max-width: 768px) {
+    width: 40% !important;
+  }
   
 }

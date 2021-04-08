@@ -14,16 +14,16 @@ const PageHeader = () => {
 
   return(
     <header className="pageHeader">
-      <div onClick={() => history.push("/Home")} className="logo"> 
+      <div onClick={() => history.push("/Home")} className="logo">
         <img src={Logo} />
-        <h1>FAT Draft</h1>
-      <span className="outwardLinks">
-        <a href="https://fullmeter.com" target="_blank"><div style={{ maskImage: `url(${HomeImage})`}} /></a>
-        <a href="https://twitter.com/D4RK_ONION" target="_blank"><div style={{maskImage: `url(${TwitterImage})`}} /></a>
-        <a href="https://github.com/D4RKONION/fat-draft" target="_blank"><div style={{maskImage: `url(${GitImage})`}} /></a>
-        <a href="https://www.patreon.com/d4rk_onion" target="_blank"><div style={{maskImage: `url(${PatreonImage})`}} /></a>
-        <a href="https://paypal.me/fullmeter" target="_blank"><div style={{maskImage: `url(${PaypalImage})`}} /></a>
-      </span>
+        <h1><span className="smallScreenHidden">FAT</span> Draft</h1>
+        <span className="outwardLinks">
+          <a href="https://fullmeter.com" target="_blank"><div style={{ maskImage: `url(${HomeImage})`, WebkitMaskImage: `url(${HomeImage})`}} /></a>
+          <a href="https://twitter.com/D4RK_ONION" target="_blank"><div style={{maskImage: `url(${TwitterImage})`, WebkitMaskImage: `url(${TwitterImage})`}} /></a>
+          <a href="https://github.com/D4RKONION/fat-draft" target="_blank"><div style={{maskImage: `url(${GitImage})`, WebkitMaskImage: `url(${GitImage})`}} /></a>
+          <a href="https://www.patreon.com/d4rk_onion" target="_blank"><div style={{maskImage: `url(${PatreonImage})`, WebkitMaskImage: `url(${PatreonImage})`}} /></a>
+          <a href="https://paypal.me/fullmeter" target="_blank"><div style={{maskImage: `url(${PaypalImage})`, WebkitMaskImage: `url(${PaypalImage})`}} /></a>
+        </span>
       
       </div>
     </header>

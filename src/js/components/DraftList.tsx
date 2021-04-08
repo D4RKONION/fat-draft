@@ -38,7 +38,7 @@ const DraftList = () => {
           game="SFV"
           style={
             draftCharacters.length === 16 ?
-              {width: "10%"} : null
+              {width: "14%"} : null
           }
           className={`
             ${bannedCharactersArray.includes(characterName) ? "banned" : ""}

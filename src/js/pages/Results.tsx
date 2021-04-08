@@ -41,7 +41,7 @@ const Results = () => {
 
   return (
     <>
-      <PageHeader></PageHeader>
+      <PageHeader></PageHeader> 
       <div className="results">
         <div className="playerData userData">
           <h2 className="user">{userName}</h2>
@@ -65,8 +65,6 @@ const Results = () => {
           }
           
         </div>
-
-        <h1>VS</h1>
 
         <div className="playerData opponentData">
           <h2 className="opponent">{opponentName}</h2>   

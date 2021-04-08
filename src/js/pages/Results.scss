@@ -1,11 +1,31 @@
 .results {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
   text-align: center;
   .playerData {
-    width: 40%;
+    flex: 1 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: calc(100vH - 55px);
+
+    h2 {
+      font-size: 30px;
+    }
+    
+    &.userData {
+      background-color: #db773429;
+      h3 {
+        color: #db7734;
+      }
+    }
+    &.opponentData {
+      background-color: #7734db29;
+      h3 {
+        color: #7734db;
+      }
+    }
     .user {
       color: #db7734;
     }
@@ -16,17 +36,49 @@
       display: flex;
       justify-content: center;
     }
-
+    .soloButton {
+      background: #db7734;
+      color: white;
+      font-size: 16px;
+      height:41px
+    }
     h3 {
       margin: 40px 0;
+      height: 41px;
     }
   }
 
-  h1 {
-    margin: 0 0 55px;
-    color: #3498db;
-    font-size: 76px;
+  
+  @media (max-width: 880px) and (orientation: portrait) {
+    flex-direction: column;
+    align-items: stretch;
+    .playerData {
+      margin: 0;
+      height: calc(50vh - 27.5px);
+      justify-content: center;
+
+      h2 {
+        font-size: 24px;
+        margin: 0;
+      }
+      
+      h3, .soloButton {
+        margin: 10px auto;
+      }
+    }
   }
-  
-  
+  @media (max-width: 880px) and (orientation: landscape) {
+    .playerData {
+      flex: 0 1 auto;
+      margin: 0;
+      
+      h2 {
+        font-size: 24px;
+      }
+
+      h3, .soloButton {
+        margin: 10px auto;
+      }
+    }
+  }
 }

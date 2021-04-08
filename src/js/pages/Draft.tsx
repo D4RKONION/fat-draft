@@ -45,22 +45,24 @@ const Draft = () => {
       <div className="draft">
 
         {!opponentName && userName &&
-          <>
-            <h2><span className="user">{userName}</span> VS <span className="opponent">???</span></h2>
-            <h3>Waiting for an opponent to join</h3>
-            <div className="orbitCenter">
-              <img alt="waiting-spinner" src={WaitingImage} className="waitingImage" />
+          <div className="waitingContainer">
+            <h1>Welcome <span className="user">{userName}</span>!</h1>
+            <div className="imageBox">
+              <h3>Waiting for <span className="opponent">an opponent</span> to join</h3>
+              <img alt="waiting-spinner" src={WaitingImage} />
             </div>
-            <h4>Invite</h4>
-            <p>{`https://fullmeter.com/fatdraft/#/Draft/${roomCode}`}</p>
-          </>
+            <div onClick={() => navigator.clipboard.writeText(`https://fullmeter.com/fatdraft/#/Draft/${roomCode}`)} className="inviteBox">
+              <h4>Tap to copy invite link</h4>
+              <p className="smallScreenHidden">{`https://fullmeter.com/fatdraft/#/Draft/${roomCode}`}</p>
+            </div>
+          </div>
         }
 
         {!userName &&
-          <>
-            <h2>Enter a name to join the draft</h2>
+          <div className="joiningContainer">
+            <h2>Enter <span className="user">a name</span> to join the draft</h2>
             <NameInput></NameInput>
-          </>
+          </div>
         }
 
         {opponentName && 
