@@ -162,7 +162,7 @@ io.on("connection", (socket) => {
       }
     } else if (nextAction.includes("Q")) {
       io.to(socket.roomCode).emit(`event://draft-finished`);
-      roomsData[socket.roomCode].tickerPosition = 0;      
+      roomsData[socket.roomCode].tickerPosition = -1;      
     }
     roomsData[socket.roomCode].tickerPosition++;
   })
@@ -195,15 +195,18 @@ io.on("connection", (socket) => {
       return false;
     }
 
-    nextAction.includes("B")
-      ? io.to(roomsData[socket.roomCode].playerOne).emit("request://ban-character")
-      : io.to(roomsData[socket.roomCode].playerOne).emit("request://pick-character") 
-    roomsData[socket.roomCode].tickerPosition++;
+    if (roomsData[socket.roomCode].playerOne && roomsData[socket.roomCode].playerTwo) {
+      nextAction.includes("B")
+        ? io.to(roomsData[socket.roomCode].playerOne).emit("request://ban-character")
+        : io.to(roomsData[socket.roomCode].playerOne).emit("request://pick-character") 
+      roomsData[socket.roomCode].tickerPosition++;
+    }
   });
   
   
   socket.on("disconnect", () => {
     console.log("Client disconnected");
+    socket.to(socket.roomCode).emit('event://opponent-disconnected');
     if (roomsData[socket.roomCode]) {
       if (socket.id === roomsData[socket.roomCode].playerOne) {
         roomsData[socket.roomCode].playerOne = "";

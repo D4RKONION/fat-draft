@@ -78,7 +78,9 @@ const Draft = () => {
             <h3>Choose a character to play as</h3>
           : userState === "start" && slugs.roomCodeSlug !== ""            
         }
-        <DraftList></DraftList>
+        {opponentName &&
+          <DraftList></DraftList>
+        }
 
         {opponentName &&
           <ul className="draftLog">

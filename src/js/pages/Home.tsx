@@ -28,6 +28,9 @@ const Home = () => {
     <>
       <PageHeader></PageHeader>
       <div className="home">
+        {userName &&
+          <h1><span className="user">{userName}</span></h1>
+        }
         {(userLevel === "unset" || userLevel === "host") &&
           <Settings></Settings>
         }

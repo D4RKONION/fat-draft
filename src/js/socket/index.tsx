@@ -22,8 +22,6 @@ const WebSocketProvider = ({ children }: {children: any}) => {
   let ws: any;
   const dispatch = useDispatch()
 
-  let history = useHistory();
-
   const banCharacter = (characterName: string) => {
     socket.emit("user://select-character", {selectionType: "banned", characterName});
     dispatch(setBannedCharacter({player: "user", character: characterName}));
@@ -77,7 +75,10 @@ const WebSocketProvider = ({ children }: {children: any}) => {
       dispatch(setRoomCode(payload.roomCode));
       dispatch(setUserState("inactive"));
       console.log(payload.opponentName)
-      payload.opponentName && dispatch(setOpponentName(payload.opponentName));
+      if (payload.opponentName) {
+        dispatch(setOpponentName(payload.opponentName));
+        dispatch(setOpponentIsConnected(true));
+      }
     })
 
     // list of draftable characters received
@@ -114,6 +115,11 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     // the opponent has voted to redraft
     socket.on("event://opponent-vote-redraft", () => {
       dispatch(setOpponentState("requesting-redraft"));
+    })
+
+    // the opponent has disconnected
+    socket.on("event://opponent-disconnected", () => {
+      dispatch(setOpponentIsConnected(false));
     })
 
     ws = {
