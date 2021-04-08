@@ -1,21 +1,21 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
-import { setRoomCode } from "../actions";
+import { resetBannedCharacters, resetPickedCharacters, setOpponentName, setOpponentState, setRoomCode, setUserLevel, setUserState } from "../actions";
 import './Draft.scss'; 
-import { draftLogSelector, opponentNameSelector, roomCodeSelector, userNameSelector, userStateSelector } from "../selectors";
+import { draftLogSelector, opponentIsConnectedSelector, opponentNameSelector, roomCodeSelector, userNameSelector, userStateSelector } from "../selectors";
 import DraftList from "../components/DraftList";
 import NameInput from "../components/NameInput";
 import PageHeader from "../components/PageHeader";
 
 import WaitingImage from '../../images/waiting.png';
-import { draftLogReducer } from "../reducers/draftlogs";
 
 const Draft = () => {
    
   const userName = useSelector(userNameSelector);
   const roomCode = useSelector(roomCodeSelector);
   const opponentName = useSelector(opponentNameSelector);
+  const opponentIsConnected = useSelector(opponentIsConnectedSelector);
   const userState = useSelector(userStateSelector);
   const draftLog = useSelector(draftLogSelector);
 
@@ -44,6 +44,22 @@ const Draft = () => {
       <PageHeader></PageHeader>
       <div className="draft">
 
+        {opponentName && !opponentIsConnected &&
+          <>
+            <h1>{opponentName} disconnected</h1>
+            <button style={{marginTop: 0}} className="soloButton" onClick={e => {
+              e.preventDefault();
+              dispatch(setUserState("start"));
+              dispatch(setUserLevel("host"));
+              dispatch(setOpponentState("unset"));
+              dispatch(setOpponentName(""))
+              dispatch(resetBannedCharacters(true));
+              dispatch(resetPickedCharacters(true));
+              history.push("/Home")
+            }}>Start Over</button>
+          </>
+        }
+
         {!opponentName && userName &&
           <div className="waitingContainer">
             <h1>Welcome <span className="user">{userName}</span>!</h1>
@@ -65,24 +81,24 @@ const Draft = () => {
           </div>
         }
 
-        {opponentName && 
+        {opponentIsConnected && 
           <h2><span className="user">{userName}</span> VS <span className="opponent">{opponentName}</span></h2>
         }
         
         {
-          opponentName && userState === "inactive" ?
+          opponentIsConnected && userState === "inactive" ?
             <h3>Waiting for <span className="opponent">{opponentName}</span> to make a choice</h3>
-          : opponentName && userState === "ban" ?
+          : opponentIsConnected && userState === "ban" ?
             <h3>Choose a character to ban</h3>
-          : opponentName && userState === "pick" ?
+          : opponentIsConnected && userState === "pick" ?
             <h3>Choose a character to play as</h3>
           : userState === "start" && slugs.roomCodeSlug !== ""            
         }
-        {opponentName &&
+        {opponentIsConnected &&
           <DraftList></DraftList>
         }
 
-        {opponentName &&
+        {opponentIsConnected &&
           <ul className="draftLog">
             {draftLog.map((log, index) =>
               index > draftLog.length - 6 &&
