@@ -1,7 +1,35 @@
+.options {
+  display: flex;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1000px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
 .option {
-  margin: 0 10px 30px;
+  margin: 0 20px 30px;
+  background: #e9f4fb;
+  padding: 20px 10px;
+  border-radius: 9px;
+  flex: 1 1 auto;
+  max-width: 436px;
+  border: #c3d5e2 1px solid;
+
+  @media (min-width: 1100px) {
+    &:first-of-type {
+      flex: 1 1 75%;
+      max-width: unset;
+    }
+  }
+
   h2 {
-    margin: 0 0 6px;
+    margin: 0 0 2px;
+  }
+
+  p {
+    margin: 0px 8px 10px;
   }
 
   .optionButtons {
@@ -12,10 +40,25 @@
       cursor: pointer;
       transition: all ease-in-out 0.07s;
       display: inline-block;
+      
+      @media (min-width: 400px) {
+        border-right-width: 0;
+      
+        &:first-of-type {
+          border-radius: 5px 0 0 5px;
+        }
+        &:last-of-type {
+          border-radius: 0 5px 5px 0;
+          border-right-width: 1px;
+        }
+      }
+      
+      &.inactive {
+        background: white;
+      }
       &.active {
         background: #3498db;
         color: white;
-        font-weight: bold;
       }
     }
   }

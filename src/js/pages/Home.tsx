@@ -28,8 +28,9 @@ const Home = () => {
     <>
       <PageHeader></PageHeader>
       <div className="home">
-        {userName &&
-          <h1><span className="user">{userName}</span></h1>
+        {userName
+          ? <h1>One more time, <span className="user">{userName}</span></h1>
+          : <h1>Welcome to FAT Draft</h1>
         }
         {(userLevel === "unset" || userLevel === "host") &&
           <Settings></Settings>
@@ -41,7 +42,7 @@ const Home = () => {
 
       {opponentName && userName && userLevel === "guest" &&
         <>
-          <h3>Waiting for {opponentName} to choose settings</h3>
+          <h3>Waiting for <span className="opponent">{opponentName}</span> to choose settings</h3>
           <h3>Don't refresh the page!</h3>
         </>
       }

@@ -12,7 +12,7 @@ import WaitingImage from '../../images/waiting.png';
 
 const Draft = () => {
    
-  const [messageToUser, setMessageToUser] = useState("")
+  const [messageToUser, setMessageToUser] = useState("Here we go!")
 
   const userName = useSelector(userNameSelector);
   const roomCode = useSelector(roomCodeSelector);
@@ -64,7 +64,7 @@ const Draft = () => {
 
 
     
-  }, [draftLog, userState])
+  }, [draftLog, userState, opponentName])
 
   return (
     <>
@@ -109,7 +109,10 @@ const Draft = () => {
         }
 
         {opponentIsConnected && 
+          <>
           <h2><span className="user">{userName}</span> VS <span className="opponent">{opponentName}</span></h2>
+          <p><span>Makoto</span> VS <span>Ibuki</span></p>
+          </>
         }
         
         {opponentIsConnected &&

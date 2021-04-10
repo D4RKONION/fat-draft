@@ -19,7 +19,7 @@ const NameInput = () => {
         ws.socket.io.opts.extraHeaders.username = userNameText;
         ws.socket.io.opts.extraHeaders.roomcode = roomCode;
         ws.socket.connect()
-      }}>Draft!</button>
+      }}>Let's Draft!</button>
     </form>
   )
 

@@ -36,22 +36,6 @@
     }
   }
   
-  .draftLog {
-    display: flex;
-    flex-direction: column-reverse;
-    text-align: left;
-    list-style: none;
-    margin: 40px auto 0;
-    padding: 15px 38px;
-    width: 50%;
-    max-width: 400px;
-    min-height: 24px;
-    background: #e9f4fb;
-    font-weight: bold;
-    border-radius: 7px;
-    font-family: Courier New;
-  }
-  
   @keyframes waitingImage-spinning {
     from { transform: rotate(-360deg); }
     to { transform: rotate(0deg); }

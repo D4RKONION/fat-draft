@@ -25,18 +25,21 @@ const Settings = () => {
   const OPTIONS = {
     games: {
       heading: "Choose a game",
+      description: "Determines what game will be drafted. We'll be adding more in the future!",
       choices: ["3S", "USF4", "SFV"],
       currentChoice: activeGame,
       onClick: (game: string) => setActiveGame(game)
     },
     characters: {
-      heading: "Characters to display",
+      heading: "Number of characters",
+      description: "Determines how many characters will be displayed in the initial grid. The higher this number, the longer the draft will take",
       choices: ["8", "16"],
       currentChoice: numberOfCharacters,
       onClick: (numOfCharacters:string) => setNumberOfCharacters(numOfCharacters)
     },
     picks: {
       heading: "Number of picks",
+      description: "Determines how many characters you and your opponent will end up with. We recommend two so that counterpicking isn't super easy.",
       choices: ["1", "2", "3"],
       currentChoice: numberOfPicks,
       onClick: (numOfPicks:string) => setNumberOfPicks(numOfPicks)
@@ -44,7 +47,7 @@ const Settings = () => {
   }
 
   return (
-    <div>
+    <div className="options">
       {Object.keys(OPTIONS).map((row) =>
         <Option key={`option-group-${row}`} buttons={OPTIONS[row as keyof typeof OPTIONS]}></Option>
       )}
