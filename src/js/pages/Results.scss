@@ -1,17 +1,20 @@
 .results {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: stretch;
   text-align: center;
   .playerData {
     flex: 1 1 auto;
 
     display: flex;
     flex-direction: column;
+    height: calc(50vh - 27.5px);
+    justify-content: center;
     align-items: stretch;
-    height: calc(100vH - 55px);
 
     h2 {
       font-size: 30px;
+      margin: 0;
     }
     
     &.userData {
@@ -41,43 +44,28 @@
       background: #db7734;
       color: white;
       font-size: 16px;
-      height:41px
+      height:41px;  
+      margin: 10px auto;
     }
     h3 {
-      margin: 40px 0;
+      margin: 10px auto;
       height: 41px;
     }
   }
 
   
   @media (max-width: 880px) and (orientation: portrait) {
-    flex-direction: column;
-    align-items: stretch;
     .playerData {
-      margin: 0;
-      height: calc(50vh - 27.5px);
-      justify-content: center;
       h2 {
         font-size: 24px;
-        margin: 0;
       }
-      h3, .soloButton {
-        margin: 10px auto;
-      }
+      
     }
   }
-  @media (max-width: 880px) and (orientation: landscape) {
+  @media (max-height: 700px) and (orientation: landscape) {
     .playerData {
-      flex: 0 1 auto;
-      margin: 0;
-      
-      h2 {
-        font-size: 24px;
-      }
-
-      h3, .soloButton {
-        margin: 10px auto;
-      }
+      padding: 20px 0;
+      height: unset;
     }
   }
 }

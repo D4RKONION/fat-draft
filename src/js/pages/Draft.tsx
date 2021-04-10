@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { resetBannedCharacters, resetPickedCharacters, setOpponentName, setOpponentState, setRoomCode, setUserLevel, setUserState } from "../actions";
@@ -12,6 +12,8 @@ import WaitingImage from '../../images/waiting.png';
 
 const Draft = () => {
    
+  const [messageToUser, setMessageToUser] = useState("")
+
   const userName = useSelector(userNameSelector);
   const roomCode = useSelector(roomCodeSelector);
   const opponentName = useSelector(opponentNameSelector);
@@ -38,6 +40,31 @@ const Draft = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userState]);
+
+  useEffect(() => {
+    let mostRecentLog = ""
+    if (draftLog.length > 0) {
+      mostRecentLog = `${draftLog[draftLog.length - 1].startsWith("[usr]")
+      ? "You"
+      : opponentName}${draftLog[draftLog.length - 1].substring(5)}`
+    } else {
+      mostRecentLog = "Here we go!"
+    }
+    
+    setMessageToUser(mostRecentLog);
+    setTimeout(() => {
+      if (userState === "inactive") {
+        setMessageToUser(`Waiting for ${opponentName} to make a choice`)
+      } else if (userState === "ban") {
+        setMessageToUser("Choose a character to ban")
+      } else if (userState === "pick") {
+        setMessageToUser("Choose a character to play as")
+      }   
+    }, 1000)
+
+
+    
+  }, [draftLog, userState])
 
   return (
     <>
@@ -85,33 +112,14 @@ const Draft = () => {
           <h2><span className="user">{userName}</span> VS <span className="opponent">{opponentName}</span></h2>
         }
         
-        {
-          opponentIsConnected && userState === "inactive" ?
-            <h3>Waiting for <span className="opponent">{opponentName}</span> to make a choice</h3>
-          : opponentIsConnected && userState === "ban" ?
-            <h3>Choose a character to ban</h3>
-          : opponentIsConnected && userState === "pick" ?
-            <h3>Choose a character to play as</h3>
-          : userState === "start" && slugs.roomCodeSlug !== ""            
+        {opponentIsConnected &&
+          <h3>{messageToUser}</h3>       
         }
+
         {opponentIsConnected &&
           <DraftList></DraftList>
         }
 
-        {opponentIsConnected &&
-          <ul className="draftLog">
-            {draftLog.map((log, index) =>
-              index > draftLog.length - 6 &&
-              <li>
-                {log.startsWith("[usr]")
-                  ? <span className="user">You</span>
-                  : <span className="opponent">{opponentName}</span>
-                }{log.substring(5)}
-              </li>
-            )}
-            
-          </ul>
-        }
       </div>
     </>
   )

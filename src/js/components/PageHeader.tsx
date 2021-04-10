@@ -15,17 +15,17 @@ const PageHeader = () => {
   return(
     <header className="pageHeader">
       <div onClick={() => history.push("/Home")} className="logo">
-        <img src={Logo} />
+        <img alt="Logo" src={Logo} />
         <h1><span className="smallScreenHidden">FAT</span> Draft</h1>
-        <span className="outwardLinks">
-          <a href="https://fullmeter.com" target="_blank"><div style={{ maskImage: `url(${HomeImage})`, WebkitMaskImage: `url(${HomeImage})`}} /></a>
-          <a href="https://twitter.com/D4RK_ONION" target="_blank"><div style={{maskImage: `url(${TwitterImage})`, WebkitMaskImage: `url(${TwitterImage})`}} /></a>
-          <a href="https://github.com/D4RKONION/fat-draft" target="_blank"><div style={{maskImage: `url(${GitImage})`, WebkitMaskImage: `url(${GitImage})`}} /></a>
-          <a href="https://www.patreon.com/d4rk_onion" target="_blank"><div style={{maskImage: `url(${PatreonImage})`, WebkitMaskImage: `url(${PatreonImage})`}} /></a>
-          <a href="https://paypal.me/fullmeter" target="_blank"><div style={{maskImage: `url(${PaypalImage})`, WebkitMaskImage: `url(${PaypalImage})`}} /></a>
-        </span>
-      
       </div>
+      <span className="outwardLinks">
+        <a href="https://fullmeter.com" rel="noreferrer" target="_blank"><div style={{ maskImage: `url(${HomeImage})`, WebkitMaskImage: `url(${HomeImage})`}} /></a>
+        <a href="https://twitter.com/D4RK_ONION" rel="noreferrer" target="_blank"><div style={{maskImage: `url(${TwitterImage})`, WebkitMaskImage: `url(${TwitterImage})`}} /></a>
+        <a href="https://github.com/D4RKONION/fat-draft" rel="noreferrer" target="_blank"><div style={{maskImage: `url(${GitImage})`, WebkitMaskImage: `url(${GitImage})`}} /></a>
+        <a href="https://www.patreon.com/d4rk_onion" rel="noreferrer" target="_blank"><div style={{maskImage: `url(${PatreonImage})`, WebkitMaskImage: `url(${PatreonImage})`}} /></a>
+        <a href="https://paypal.me/fullmeter" rel="noreferrer" target="_blank"><div style={{maskImage: `url(${PaypalImage})`, WebkitMaskImage: `url(${PaypalImage})`}} /></a>
+      </span>
+      
     </header>
   )
 }

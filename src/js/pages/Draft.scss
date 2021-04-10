@@ -1,5 +1,6 @@
 .draft {
   text-align: center;
+  margin: 6vH 0;
   .user {
     color: #db7734;
   }
@@ -45,7 +46,8 @@
     width: 50%;
     max-width: 400px;
     min-height: 24px;
-    background: #ededed;
+    background: #e9f4fb;
+    font-weight: bold;
     border-radius: 7px;
     font-family: Courier New;
   }
