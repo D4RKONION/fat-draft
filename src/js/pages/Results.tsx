@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { resetBannedCharacters, resetPickedCharacters, setOpponentName, setOpponentState, setUserState, setUserLevel } from '../actions';
 import CharacterPortrait from '../components/CharacterPortrait';
 import PageHeader from '../components/PageHeader';
-import { opponentIsConnectedSelector, opponentNameSelector, opponentStateSelector, pickedCharactersSelector, userNameSelector, userStateSelector } from '../selectors';
+import { activeGameSelector, opponentIsConnectedSelector, opponentNameSelector, opponentStateSelector, pickedCharactersSelector, userNameSelector, userStateSelector } from '../selectors';
 import { WebSocketContext } from '../socket';
 import './Results.scss'
 
@@ -17,6 +17,7 @@ const Results = () => {
   const opponentState = useSelector(opponentStateSelector);
   const opponentIsConnected = useSelector(opponentIsConnectedSelector);
   const pickedCharactersObj = useSelector(pickedCharactersSelector);
+  const activeGame = useSelector(activeGameSelector);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -50,7 +51,7 @@ const Results = () => {
               <CharacterPortrait
                 charName={charName}
                 style={{width: pickedCharactersObj.user.length > 2 ? "26%" : null}}
-                game="SFV"
+                game={activeGame}
                 className="characterContainer user picked"
                 key={`char-block-${charName}`}
               />
@@ -90,7 +91,7 @@ const Results = () => {
               <CharacterPortrait
                 charName={charName}
                 style={{width: pickedCharactersObj.opponent.length > 2 ? "26%" : null}}
-                game="SFV"
+                game={activeGame}
                 className="characterContainer opponent picked"
                 key={`char-block-${charName}`}
               />

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { bannedCharactersSelector, draftCharactersSelector, pickedCharactersSelector, userStateSelector } from "../selectors";
+import { activeGameSelector, bannedCharactersSelector, draftCharactersSelector, pickedCharactersSelector, userStateSelector } from "../selectors";
 import "./DraftList.scss"
 
 import { WebSocketContext } from "../socket";
@@ -29,13 +29,14 @@ const DraftList = () => {
 
 
   const userState = useSelector(userStateSelector);
+  const activeGame = useSelector(activeGameSelector);
 
   return(
     <div className="draftList">
       {draftCharacters.map(characterName =>
         <CharacterPortrait
           charName={characterName}
-          game="SFV"
+          game={activeGame}
           style={
             draftCharacters.length === 16 ?
               {width: "14%"} : null

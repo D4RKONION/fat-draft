@@ -98,7 +98,12 @@ io.on("connection", (socket) => {
     
 
     // send both players the draft list, tell player1 to choose
-    io.to(socket.roomCode).emit('data://draft-characters', roomsData[socket.roomCode].draftCharacters);
+    io.to(socket.roomCode).emit('data://draft-data', {
+      draftCharacters: roomsData[socket.roomCode].draftCharacters,
+      activeGame: roomsData[socket.roomCode].activeGame,
+      numberOfCharacters: roomsData[socket.roomCode].numberOfCharacters,
+      numberOfPicks: roomsData[socket.roomCode].numberOfPicks,
+    });
 
     const numOfChars = `${roomsData[socket.roomCode].numberOfCharacters} char`;
     const numOfPicks = `${roomsData[socket.roomCode].numberOfPicks} pick`;
@@ -186,7 +191,12 @@ io.on("connection", (socket) => {
     }
     console.log(roomsData[socket.roomCode])
 
-    io.to(socket.roomCode).emit('data://draft-characters', roomsData[socket.roomCode].draftCharacters);
+    io.to(socket.roomCode).emit('data://draft-data', {
+      draftCharacters: roomsData[socket.roomCode].draftCharacters,
+      activeGame: roomsData[socket.roomCode].activeGame,
+      numberOfCharacters: roomsData[socket.roomCode].numberOfCharacters,
+      numberOfPicks: roomsData[socket.roomCode].numberOfPicks,
+    });
     const numOfChars = `${roomsData[socket.roomCode].numberOfCharacters} char`;
     const numOfPicks = `${roomsData[socket.roomCode].numberOfPicks} pick`;
     const nextAction = tickers[numOfChars][numOfPicks][roomsData[socket.roomCode].tickerPosition];

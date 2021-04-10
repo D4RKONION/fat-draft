@@ -3,9 +3,9 @@
 import { createContext } from 'react'
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacter, setPickedCharacter, setUserLevel, setOpponentIsConnected, setOpponentState } from '../actions';
+import { setOpponentName, setRoomCode, setUserName, setDraftCharacters, setUserState, setBannedCharacter, setPickedCharacter, setUserLevel, setOpponentIsConnected, setOpponentState, setActiveGame } from '../actions';
 import { useHistory } from 'react-router';
-import { User } from '../types';
+import { Draft, User } from '../types';
 
 
 const WebSocketContext = createContext(null);
@@ -82,9 +82,15 @@ const WebSocketProvider = ({ children }: {children: any}) => {
     })
 
     // list of draftable characters received
-    socket.on("data://draft-characters", (characterList: string[]) => {
+    socket.on("data://draft-data", (draftData: {
+      draftCharacters: Draft["draftCharacters"],
+      activeGame: Draft["activeGame"],
+      numberOfCharacters: string,
+      numberOfPicks: string,
+    }) => {
       dispatch(setUserState("inactive"));
-      dispatch(setDraftCharacters(characterList));
+      dispatch(setDraftCharacters(draftData.draftCharacters));
+      dispatch(setActiveGame(draftData.activeGame));
     })
 
     // you may ban a character
