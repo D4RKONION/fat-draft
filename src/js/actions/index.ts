@@ -1,8 +1,9 @@
-import { Opponent, User } from "../types";
+import { Draft, Opponent, User } from "../types";
 
 //action types
 export const SET_USER_NAME = "SET_USER_NAME";
 export const SET_USER_LEVEL = "SET_USER_LEVEL";
+export const SET_ACTIVE_GAME = "SET_ACTIVE_GAME";
 export const SET_ROOM_CODE = "SET_ROOM_CODE";
 export const SET_OPPONENT_NAME = "SET_OPPONENT_NAME";
 export const SET_OPPONENT_IS_CONNECTED = "SET_OPPONENT_IS_CONNECTED";
@@ -30,9 +31,13 @@ export const setUserState = (userData: User["state"]) => ({
   "userData": {state: userData},
 })
 
-export const setRoomCode = (roomCode: string) => ({
+export const setRoomCode = (draftData: Draft["roomCode"]) => ({
   type: SET_ROOM_CODE,
-  roomCode,
+  "draftData": {roomCode: draftData},
+})
+export const setActiveGame = (draftData: Draft["activeGame"]) => ({
+  type: SET_ACTIVE_GAME,
+  "draftData": {activeGame: draftData},
 })
 
 export const setOpponentName = (opponentData: Opponent["name"]) => ({
@@ -50,23 +55,23 @@ export const setOpponentState = (opponentData: Opponent["state"]) => ({
   "opponentData": {state: opponentData},
 })
 
-export const setDraftCharacters = (characterList: string[]) => ({
+export const setDraftCharacters = (draftData: Draft["draftCharacters"]) => ({
   type: SET_DRAFT_CHARACTERS,
-  characterList,
+  "draftData": {draftCharacters: draftData},
 })
 
-export const setBannedCharacter = (payload: {player: string, character: string}) => ({
+export const setBannedCharacter = (bannedCharacter: {player: string, character: string}) => ({
   type: SET_BANNED_CHARACTER,
-  payload,
+  "draftData": {bannedCharacter},
 })
 export const resetBannedCharacters = (confirm: Boolean) => ({
   type: RESET_BANNED_CHARACTERS,
   confirm,
 })
 
-export const setPickedCharacter = (payload: {player: string, character: string}) => ({
+export const setPickedCharacter = (pickedCharacter: {player: string, character: string}) => ({
   type: SET_PICKED_CHARACTER,
-  payload,
+  "draftData": {pickedCharacter},
 })
 export const resetPickedCharacters = (confirm: Boolean) => ({
   type: RESET_PICKED_CHARACTERS,
