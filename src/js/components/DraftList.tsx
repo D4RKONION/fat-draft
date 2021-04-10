@@ -42,9 +42,9 @@ const DraftList = () => {
               {width: "14%"} : null
           }
           className={`
-            ${bannedCharactersArray.includes(characterName) ? "banned" : ""}
-            ${pickedCharactersObj["user"].includes(characterName) ? "user picked" : ""}
-            ${pickedCharactersObj["opponent"].includes(characterName) ? "opponent picked" : ""}
+            ${bannedCharactersArray.includes(characterName) ? "banned taken" : ""}
+            ${pickedCharactersObj["user"].includes(characterName) ? "user picked taken" : ""}
+            ${pickedCharactersObj["opponent"].includes(characterName) ? "opponent picked taken" : ""}
           `
           }
           key={`char-block-${characterName}`}
