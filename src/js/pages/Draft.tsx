@@ -8,7 +8,7 @@ import DraftList from "../components/DraftList";
 import NameInput from "../components/NameInput";
 import PageHeader from "../components/PageHeader";
 
-import WaitingImage from '../../images/waiting.png';
+import WaitingSpinner from "../components/WaitingSpinner";
 
 const Draft = () => {
    
@@ -62,8 +62,6 @@ const Draft = () => {
       }   
     }, 1000)
 
-
-    
   }, [draftLog, userState, opponentName])
 
   return (
@@ -92,7 +90,7 @@ const Draft = () => {
             <h1>Welcome <span className="user">{userName}</span>!</h1>
             <div className="imageBox">
               <h3>Waiting for <span className="opponent">an opponent</span> to join</h3>
-              <img alt="waiting-spinner" src={WaitingImage} />
+              <WaitingSpinner/>
             </div>
             <div onClick={() => navigator.clipboard.writeText(`https://fullmeter.com/fatdraft/#/Draft/${roomCode}`)} className="inviteBox">
               <h4>Tap to copy invite link</h4>
@@ -108,12 +106,7 @@ const Draft = () => {
           </div>
         }
 
-        {opponentIsConnected && 
-          <>
-          <h2><span className="user">{userName}</span> VS <span className="opponent">{opponentName}</span></h2>
-          <p><span>Makoto</span> VS <span>Ibuki</span></p>
-          </>
-        }
+        
         
         {opponentIsConnected &&
           <h3>{messageToUser}</h3>       
@@ -121,6 +114,32 @@ const Draft = () => {
 
         {opponentIsConnected &&
           <DraftList></DraftList>
+        }
+
+        {opponentIsConnected && 
+          <div className="versusContainer">
+            <div className="versusPlayer">
+              <h2><span className="user">{userName}</span></h2>
+              {draftLog.map((log, index) => 
+                log.startsWith("[usr]") && log.substring(6, 12) === "banned" && index > draftLog.length - 7 
+                  ? <p>{index + 1}: <s>{log.substring(13)}</s></p>
+                : log.startsWith("[usr]") && log.substring(6, 12) === "picked" && index > draftLog.length - 7 
+                  ? <p>{index + 1}: {log.substring(13)}</p>
+                : null
+              )}
+            </div>
+            <h1>VS</h1>
+            <div className="versusPlayer">
+              <h2><span className="opponent">{opponentName}</span></h2>
+              {draftLog.map((log, index) => 
+                log.startsWith("[opp]") && log.substring(6, 12) === "banned" && index > draftLog.length - 7 
+                  ? <p>{index + 1}: <s>{log.substring(13)}</s></p>
+                : log.startsWith("[opp]") && log.substring(6, 12) === "picked" && index > draftLog.length - 7 
+                  ? <p>{index + 1}: {log.substring(13)}</p>
+                : null
+              )}
+            </div>
+          </div>
         }
 
       </div>

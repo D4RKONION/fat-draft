@@ -1,0 +1,10 @@
+.waitingSpinner {
+  animation: waitingImage-spinning infinite 1.5s linear;
+  width: 80px;
+  
+  
+  @keyframes waitingImage-spinning {
+    from { transform: rotate(-360deg); }
+    to { transform: rotate(0deg); }
+  }
+}

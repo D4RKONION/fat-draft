@@ -47,17 +47,19 @@ const Settings = () => {
   }
 
   return (
-    <div className="options">
-      {Object.keys(OPTIONS).map((row) =>
-        <Option key={`option-group-${row}`} buttons={OPTIONS[row as keyof typeof OPTIONS]}></Option>
-      )}
+    <>
+      <div className="options">
+        {Object.keys(OPTIONS).map((row) =>
+          <Option key={`option-group-${row}`} buttons={OPTIONS[row as keyof typeof OPTIONS]}></Option>
+        )}
+      </div>
       {userName &&
         <button className="soloButton" onClick={e => {
           e.preventDefault();
           ws.startNewDraft({activeGame, numberOfCharacters, numberOfPicks});
-        }}>Draft!</button>
+        }}>Let's Draft!</button>
       }
-    </div>
+    </>
 
   
     

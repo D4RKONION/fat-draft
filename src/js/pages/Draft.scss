@@ -13,10 +13,6 @@
 
     .imageBox {
       margin-top: 20px;
-      img {
-        animation: waitingImage-spinning infinite 1.5s linear;
-        width: 80px;
-      }
     }
     .inviteBox {
       background: #e9f4fb;
@@ -35,10 +31,40 @@
       margin-top: 0;
     }
   }
-  
-  @keyframes waitingImage-spinning {
-    from { transform: rotate(-360deg); }
-    to { transform: rotate(0deg); }
+  .versusContainer {
+    display: flex;
+    justify-content: space-around;
+    width: 84%;
+    margin: 20px auto;
+    background: linear-gradient(90deg, rgb(252, 244, 239) 0%, rgb(252, 244, 239) 49.9%, rgb(244, 239, 252) 50%, rgb(244, 239, 252) 100%);
+    border-radius: 9px;
+    max-width: 800px;
+    height: 130px;
+
+    .versusPlayer {
+      flex: 1 1 50%;
+      margin-top: 20px;
+      h2 {
+        margin: 0;
+      }
+      p {
+        margin: 0;
+      }
+    }
+
+    h1 {
+      padding: 5px;
+      border-radius: 55px;
+      background: #ffffff;
+      color: #3498DB;
+      align-self: center;
+    }
+
+    @media (max-width: 500px) {
+      .versusPlayer h2, h1 {
+        font-size: 15px;
+      }
+    }
   }
 }
 

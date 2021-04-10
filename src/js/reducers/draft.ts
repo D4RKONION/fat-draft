@@ -50,7 +50,7 @@ export const draftReducer = (state = defaultState, action: DraftReducerAction) =
         draftLog: [...state.draftLog, banLog]
       };
     case SET_PICKED_CHARACTER:
-      const pickLog = `${action.draftData.pickedCharacter.player === "user" ? "[usr]" : "[opp]"} banned ${action.draftData.pickedCharacter.character}`
+      const pickLog = `${action.draftData.pickedCharacter.player === "user" ? "[usr]" : "[opp]"} picked ${action.draftData.pickedCharacter.character}`
       return {
         ...state,
         pickedCharacters: {

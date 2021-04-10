@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import NameInput from "../components/NameInput";
 import PageHeader from "../components/PageHeader";
 import Settings from "../components/Settings";
+import WaitingSpinner from "../components/WaitingSpinner";
 import { roomCodeSelector, userNameSelector, userLevelSelector, userStateSelector, opponentNameSelector } from "../selectors";
 import './Home.scss'
 
@@ -29,7 +30,7 @@ const Home = () => {
       <PageHeader></PageHeader>
       <div className="home">
         {userName
-          ? <h1>One more time, <span className="user">{userName}</span></h1>
+          ? <h1>One more time, <span className="user">{userName}</span>!</h1>
           : <h1>Welcome to FAT Draft</h1>
         }
         {(userLevel === "unset" || userLevel === "host") &&
@@ -44,6 +45,7 @@ const Home = () => {
         <>
           <h3>Waiting for <span className="opponent">{opponentName}</span> to choose settings</h3>
           <h3>Don't refresh the page!</h3>
+          <WaitingSpinner />
         </>
       }
       </div>
