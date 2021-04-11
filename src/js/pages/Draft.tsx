@@ -9,6 +9,7 @@ import NameInput from "../components/NameInput";
 import PageHeader from "../components/PageHeader";
 
 import WaitingSpinner from "../components/WaitingSpinner";
+import VersusPartial from "../components/VersusPartial";
 
 const Draft = () => {
    
@@ -36,7 +37,10 @@ const Draft = () => {
 
   useEffect(() => {
     if (userState === "finished") {
-      history.replace("/Results")
+      setTimeout(() => {
+        history.replace("/Results")
+      }, 1000)
+      
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userState]);
@@ -52,7 +56,7 @@ const Draft = () => {
     }
     
     setMessageToUser(mostRecentLog);
-    setTimeout(() => {
+    const nextInstruction = setTimeout(() => {
       if (userState === "inactive") {
         setMessageToUser(`Waiting for ${opponentName} to make a choice`)
       } else if (userState === "ban") {
@@ -61,6 +65,8 @@ const Draft = () => {
         setMessageToUser("Choose a character to play as")
       }   
     }, 1000)
+
+    return () => clearTimeout(nextInstruction);
 
   }, [draftLog, userState, opponentName])
 
@@ -118,27 +124,17 @@ const Draft = () => {
 
         {opponentIsConnected && 
           <div className="versusContainer">
-            <div className="versusPlayer">
-              <h2><span className="user">{userName}</span></h2>
-              {draftLog.map((log, index) => 
-                log.startsWith("[usr]") && log.substring(6, 12) === "banned" && index > draftLog.length - 7 
-                  ? <p>{index + 1}: <s>{log.substring(13)}</s></p>
-                : log.startsWith("[usr]") && log.substring(6, 12) === "picked" && index > draftLog.length - 7 
-                  ? <p>{index + 1}: {log.substring(13)}</p>
-                : null
-              )}
-            </div>
+            <VersusPartial
+              name={userName}
+              type="user"
+              draftLog={draftLog}
+            />
             <h1>VS</h1>
-            <div className="versusPlayer">
-              <h2><span className="opponent">{opponentName}</span></h2>
-              {draftLog.map((log, index) => 
-                log.startsWith("[opp]") && log.substring(6, 12) === "banned" && index > draftLog.length - 7 
-                  ? <p>{index + 1}: <s>{log.substring(13)}</s></p>
-                : log.startsWith("[opp]") && log.substring(6, 12) === "picked" && index > draftLog.length - 7 
-                  ? <p>{index + 1}: {log.substring(13)}</p>
-                : null
-              )}
-            </div>
+            <VersusPartial
+              name={opponentName}
+              type="opponent"
+              draftLog={draftLog}
+            />
           </div>
         }
 

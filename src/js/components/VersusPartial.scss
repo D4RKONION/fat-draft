@@ -1,0 +1,17 @@
+.versusContainer {
+  .versusPlayer {
+    flex: 1 1 50%;
+    margin-top: 20px;
+    h2 {
+      margin: 0;
+      @media (max-width: 500px) {
+        font-size: 15px;
+      }
+    }
+    p {
+      margin: 0;
+    }
+
+    
+  }
+}

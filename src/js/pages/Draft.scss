@@ -41,16 +41,7 @@
     max-width: 800px;
     height: 130px;
 
-    .versusPlayer {
-      flex: 1 1 50%;
-      margin-top: 20px;
-      h2 {
-        margin: 0;
-      }
-      p {
-        margin: 0;
-      }
-    }
+    
 
     h1 {
       padding: 5px;
@@ -61,7 +52,7 @@
     }
 
     @media (max-width: 500px) {
-      .versusPlayer h2, h1 {
+      h1 {
         font-size: 15px;
       }
     }
