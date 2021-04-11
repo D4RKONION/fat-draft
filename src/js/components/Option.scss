@@ -10,12 +10,13 @@
 
 .option {
   margin: 0 20px 30px;
-  background: #e9f4fb;
+  background: var(--option-background);
+  color: var(--option-contrast);
   padding: 20px 10px;
   border-radius: 9px;
   flex: 1 1 auto;
   max-width: 436px;
-  border: #c3d5e2 1px solid;
+  border: var(--option-border) 1px solid;
 
   @media (min-width: 1100px) {
     &:first-of-type {
@@ -54,11 +55,12 @@
       }
       
       &.inactive {
-        background: white;
+        background: var(--surface);
+        color: var(--surface-contrast)
       }
       &.active {
-        background: #3498db;
-        color: white;
+        background: var(--primary);
+        color: #ffffff;
       }
     }
   }

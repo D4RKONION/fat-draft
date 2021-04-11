@@ -1,7 +1,7 @@
 .pageHeader {
-  background: #3498DB;
+  background: var(--primary);
   margin: 0 0 20px;
   padding: 0px 45px;
   display: block;
-  color: white;
+  color: var(--surface-contrast);
 }

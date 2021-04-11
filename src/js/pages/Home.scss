@@ -2,9 +2,9 @@
   margin: 7vh 0;
   text-align: center;
   .user {
-    color: #db7734;
+    color: var(--secondary-user);
   }
   .opponent {
-    color: #7734db;
+    color: var(--secondary-opponent);
   }
 }

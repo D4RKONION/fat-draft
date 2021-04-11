@@ -8,15 +8,20 @@ import Draft from "./js/pages/Draft";
 import Home from "./js/pages/Home";
 import Results from "./js/pages/Results";
 import "./App.scss"
-
-
-
-
+import "./style/light.scss"
+import "./style/dark.scss"
+import { useState } from "react";
 
 
 const App = () => {
+  
+const [theme, setTheme] = useState("lightMode");
+
+document.body.style.background = theme === "lightMode" ? "#ffffff" : "#1d1e20";
+document.body.style.color = theme === "lightMode" ? "#000000" : "#f1f1ff";
+
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       <Router>
         <Switch>
 
@@ -33,7 +38,8 @@ const App = () => {
           </Route>
           <Redirect to="/Home"/>
         </Switch>					
-      </Router>        
+      </Router>
+      <div id="themeSwitcher" onClick={() => theme === "lightMode" ? setTheme("darkMode") : setTheme("lightMode")}>O</div>      
     </div>
   )
 };

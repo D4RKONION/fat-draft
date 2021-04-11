@@ -1,0 +1,32 @@
+.darkMode {
+  --surface: #1d1e20;
+  --surface-contrast: #f1f1ff;
+
+  --primary: #0f3a57;
+  --primary-fade: #0d2435;
+
+  --secondary-user: #db7734;
+  --secondary-user-fade: #db77345b;
+  --secondary-user-fader: #db773414;
+  
+  --secondary-opponent: #7734db;
+  --secondary-opponent-fade: #7734db5b;
+  --secondary-opponent-fader: #7734db14;
+
+  --page-header-contrast: #f1f1ff;
+
+  --option-background: #282828;
+  --option-contrast: #ffffff;
+  --option-border: #333333;
+
+  --input-background: #282828;
+  --input-contrast: #ffffff;
+  --input-placeholder: #8e8e8e;
+  --input-border: #333333;
+
+  --unpicked-border: #4a85af;
+  --unpicked-background: #295576;
+
+  --banned-border: #7f7f7f;
+  --banned-background: #545454;
+}

@@ -1,9 +1,9 @@
 .pageHeader {
-  background: #3498DB;
+  background: var(--primary);
   margin: 0;
   padding: 6px 14px 4px;
   display: flex;
-  color: white;
+  color: var(--page-header-contrast);
   align-items: center;
   height: 45px;
   box-shadow: 0px 0px 2px 2px #00000026;
@@ -30,8 +30,10 @@
     a > div {
       width: 26px;
       height: 26px;
-      background: white;
+      background: var(--page-header-contrast);
+      -webkit-mask-size: auto;
       mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
     }
   }
 

@@ -1,0 +1,32 @@
+.lightMode {
+  --surface: #ffffff;
+  --surface-contrast: #000000;
+
+  --primary: #3498db;
+  --primary-fade: #3498db5b;
+
+  --secondary-user: #db7734;
+  --secondary-user-fade: #db77345b;
+  --secondary-user-fader: #db773414;
+
+  --secondary-opponent: #7734db;
+  --secondary-opponent-fade: #7734db5b;
+  --secondary-opponent-fader: #7734db14;
+
+  --page-header-contrast: #ffffff;
+
+  --option-background: #e9f4fb;
+  --option-contrast: #000000;
+  --option-border: #c3d5e2;
+
+  --input-background: #ffffff;
+  --input-contrast: #000000;
+  --input-placeholder: #8e8e8e;
+  --input-border: #dddddd;
+
+  --unpicked-border: #3498db;
+  --unpicked-background: #3498db5b;
+
+  --banned-border: #aeaeae;
+  --banned-background: #d2d2d2;
+}

@@ -18,22 +18,22 @@
     }
     
     &.userData {
-      background-color: #db773414;
+      background-color: var(--secondary-user-fader);
       h3 {
-        color: #db7734;
+        color: var(--secondary-user);
       }
     }
     &.opponentData {
-      background-color: #7734db14;
+      background-color: var(--secondary-opponent-fader);
       h3 {
-        color: #7734db;
+        color: var(--secondary-opponent);
       }
     }
     .user {
-      color: #db7734;
+      color: var(--secondary-user);
     }
     .opponent {
-      color: #7734db;
+      color: var(--secondary-opponent);
     }
     .characterList {
       display: flex;
@@ -41,8 +41,8 @@
       flex-wrap: wrap;
     }
     .soloButton {
-      background: #db7734;
-      color: white;
+      background: var(--secondary-user);
+      color: var(--surface-contrast);
       font-size: 16px;
       height:41px;  
       margin: 10px auto;

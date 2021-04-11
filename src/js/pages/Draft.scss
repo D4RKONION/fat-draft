@@ -2,10 +2,10 @@
   text-align: center;
   margin: 6vH 0;
   .user {
-    color: #db7734;
+    color: var(--secondary-user);
   }
   .opponent {
-    color: #7734db;
+    color: var(--secondary-opponent);
   }
 
   .waitingContainer {
@@ -36,7 +36,7 @@
     justify-content: space-around;
     width: 84%;
     margin: 20px auto;
-    background: linear-gradient(90deg, rgb(252, 244, 239) 0%, rgb(252, 244, 239) 49.9%, rgb(244, 239, 252) 50%, rgb(244, 239, 252) 100%);
+    background: linear-gradient(90deg, var(--secondary-user-fader) 0%, var(--secondary-user-fader) 49.9%, var(--secondary-opponent-fader) 50%, var(--secondary-opponent-fader) 100%);
     border-radius: 9px;
     max-width: 800px;
     height: 130px;
@@ -46,8 +46,8 @@
     h1 {
       padding: 5px;
       border-radius: 55px;
-      background: #ffffff;
-      color: #3498DB;
+      background: var(--surface);
+      color: #3498db;
       align-self: center;
     }
 
