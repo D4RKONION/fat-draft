@@ -7,6 +7,8 @@ import {
 import Draft from "./js/pages/Draft";
 import Home from "./js/pages/Home";
 import Results from "./js/pages/Results";
+import LightIcon from './images/light.png';
+import DarkIcon from './images/dark.png';
 import "./App.scss"
 import "./style/light.scss"
 import "./style/dark.scss"
@@ -39,7 +41,7 @@ document.body.style.color = theme === "lightMode" ? "#000000" : "#f1f1ff";
           <Redirect to="/Home"/>
         </Switch>					
       </Router>
-      <div id="themeSwitcher" onClick={() => theme === "lightMode" ? setTheme("darkMode") : setTheme("lightMode")}>O</div>      
+      <div id="themeSwitcher" onClick={() => theme === "lightMode" ? setTheme("darkMode") : setTheme("lightMode")}><img src={theme === "lightMode" ? DarkIcon : LightIcon}/></div>      
     </div>
   )
 };
