@@ -12,15 +12,22 @@ import DarkIcon from './images/dark.png';
 import "./App.scss"
 import "./style/light.scss"
 import "./style/dark.scss"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const App = () => {
   
 const [theme, setTheme] = useState("lightMode");
 
+useEffect(() => {
+  window.matchMedia('(prefers-color-scheme: dark)').matches &&
+    setTheme("darkMode");
+}, [])
+
 document.body.style.background = theme === "lightMode" ? "#ffffff" : "#1d1e20";
 document.body.style.color = theme === "lightMode" ? "#000000" : "#f1f1ff";
+
+
 
   return (
     <div className={`App ${theme}`}>
